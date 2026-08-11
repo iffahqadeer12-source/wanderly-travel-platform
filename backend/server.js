@@ -8,14 +8,11 @@ dotenv.config();
 
 const app = express();
 
-// Middleware
 app.use(cors());
 app.use(express.json());
 
-// Connect MongoDB
 connectDB();
 
-// Routes
 app.use("/api/destinations", destinationRoutes);
 
 app.get("/", (req, res) => {
