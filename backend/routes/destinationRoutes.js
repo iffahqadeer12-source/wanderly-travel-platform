@@ -1,28 +1,22 @@
 const express = require("express");
+const serverless = require("serverless-http");
+const cors = require("cors");
+const dotenv = require("dotenv");
 
-const {
-  getDestinations,
-  getDestination,
-  addDestination,
-  updateDestination,
-  deleteDestination,
-} = require("../controllers/destinationController");
+const connectDB = require("../../backend/config/db");
+const destinationRoutes = require("../../backend/routes/destinationRoutes");
 
-const router = express.Router();
+dotenv.config();
 
-// GET all destinations
-router.get("/", getDestinations);
+const app = express();
 
-// GET one destination
-router.get("/:id", getDestination);
+app.use(cors());
+app.use(express.json());
 
-// ADD destination
-router.post("/", addDestination);
+app.get("/", (req, res) => {
+  res.json({ message: "Welcome to Wanderly API" });
+});
 
-// UPDATE destination
-router.put("/:id", updateDestination);
+app.use("/destinations", destinationRoutes);
 
-// DELETE destination
-router.delete("/:id", deleteDestination);
-
-module.exports = router;
+module.exports.handler = serverless(app);
