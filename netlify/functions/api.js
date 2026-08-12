@@ -13,12 +13,10 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-connectDB();
-
-app.use("/destinations", destinationRoutes);
-
 app.get("/", (req, res) => {
   res.json({ message: "Welcome to Wanderly API" });
 });
+
+app.use("/destinations", destinationRoutes);
 
 module.exports.handler = serverless(app);
