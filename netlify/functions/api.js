@@ -15,7 +15,8 @@ app.use(express.json());
 
 connectDB();
 
-app.use("/destinations", destinationRoutes);
+// Netlify function API route
+app.use("/.netlify/functions/api", destinationRoutes);
 
 app.get("/", (req, res) => {
   res.json({ message: "Welcome to Wanderly API" });
