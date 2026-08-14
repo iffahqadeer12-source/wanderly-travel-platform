@@ -24,7 +24,7 @@ function App() {
     const fetchDestinations = async () => {
       try {
         const response = await axios.get(
-           "/.netlify/functions/api/destinations"
+           "/api/destinations"
         );
 
         setDestinations(response.data);
