@@ -13,7 +13,7 @@ app.use(express.json());
 
 connectDB();
 
-app.use("/api/destinations", destinationRoutes);
+app.use("/destinations", destinationRoutes);
 
 app.get("/", (req, res) => {
   res.send("Welcome to Wanderly API");
