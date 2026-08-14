@@ -24,7 +24,7 @@ function App() {
     const fetchDestinations = async () => {
       try {
         const response = await axios.get(
-           "/destinations"
+            "https://wanderly-travel-platform.vercel.app/destinations"
         );
 
         setDestinations(response.data);
