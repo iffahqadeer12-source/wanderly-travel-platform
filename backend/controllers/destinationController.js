@@ -1,14 +1,26 @@
 const Destination = require("../models/Destination");
 
 // GET all destinations
+
 const getDestinations = async (req, res) => {
   try {
-    const destinations = await Destination.find();
+    const { category } = req.query;
+
+    let destinations;
+
+    if (category) {
+      destinations = await Destination.find({ category });
+    } else {
+      destinations = await Destination.find();
+    }
+
     res.status(200).json(destinations);
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
 };
+
+
 
 // GET one destination
 const getDestination = async (req, res) => {

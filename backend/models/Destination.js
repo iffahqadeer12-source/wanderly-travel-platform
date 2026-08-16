@@ -32,6 +32,16 @@ const destinationSchema = new mongoose.Schema(
       required: true,
     },
 
+    rating: {
+      type: Number,
+      default: 0,
+    },
+
+    popularity: {
+      type: String,
+      default: "Medium",
+    },
+
     featured: {
       type: Boolean,
       default: false,

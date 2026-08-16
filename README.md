@@ -1,408 +1,241 @@
-\# 🌍 Wanderly - Travel Destination Platform
+# 🌍 Wanderly - Travel Destination Platform
 
+A full-stack Travel & Tourism platform built using the MERN Stack.
 
+## 🚀 Project Overview
 
-A full-stack Travel \& Tourism platform built using the MERN Stack.
-
-
-
-\## 🚀 Project Overview
-
-
-
-Wanderly is a travel destination platform that allows users to explore destinations, search for places, browse destinations by category, and discover featured locations.
-
-
+Wanderly is a travel destination platform that allows users to explore destinations, search for places, browse destinations by category, view featured locations, and open detailed destination pages.
 
 The application uses MongoDB to store destination data and connects the React frontend to a Node.js and Express.js backend API.
 
+## 🛠️ Technologies Used
 
+### Frontend
 
-\## 🛠️ Technologies Used
+* React.js
+* Vite
+* React Router DOM
+* Axios
+* Lucide React
+* CSS
 
+### Backend
 
+* Node.js
+* Express.js
+* Mongoose
+* CORS
+* dotenv
 
-\### Frontend
+### Database
 
+* MongoDB
 
+### API Testing
 
-\- React.js
+* Postman
 
-\- Vite
+## ✨ Features
 
-\- Axios
+### Frontend
 
-\- Lucide React
+* Responsive travel website
+* Hero section
+* Featured destinations
+* All destinations
+* Search destinations
+* Category-based browsing
+* Destination details page
+* Destination image, location, description, rating, and popularity
+* Loading states
+* Error handling
+* Empty search results handling
+* React Router navigation
+* About section
 
-\- CSS
+### Backend
 
+* REST API
+* MongoDB destination storage
+* Full CRUD functionality
+* Get all destinations
+* Get a single destination
+* Add destinations
+* Update destinations
+* Delete destinations
+* Filter destinations by category
+* Rating and popularity fields
 
-
-\### Backend
-
-
-
-\- Node.js
-
-\- Express.js
-
-\- Mongoose
-
-\- CORS
-
-\- dotenv
-
-
-
-\### Database
-
-
-
-\- MongoDB
-
-
-
-\### API Testing
-
-
-
-\- Postman
-
-
-
-\## ✨ Features
-
-
-
-\- Responsive travel website
-
-\- Hero section
-
-\- Featured destinations
-
-\- All destinations
-
-\- Search destinations
-
-\- Travel categories
-
-\- About section
-
-\- MongoDB destination storage
-
-\- REST API
-
-\- Full CRUD functionality
-
-\- React frontend and backend integration
-
-
-
-\## 📁 Project Structure
-
-
+## 📁 Project Structure
 
 ```text
-
 mern/
-
 │
-
 ├── backend/
-
 │   ├── config/
-
 │   │   └── db.js
-
 │   ├── controllers/
-
 │   │   └── destinationController.js
-
 │   ├── models/
-
 │   │   └── Destination.js
-
 │   ├── routes/
-
 │   │   └── destinationRoutes.js
-
 │   ├── .env
-
 │   ├── .gitignore
-
 │   ├── package.json
-
 │   └── server.js
-
 │
-
 ├── frontend/
-
 │   ├── src/
-
 │   │   ├── App.jsx
-
 │   │   ├── App.css
-
+│   │   ├── DestinationDetails.jsx
 │   │   ├── index.css
-
 │   │   └── main.jsx
-
 │   ├── package.json
-
 │   └── vite.config.js
-
 │
-
 └── README.md
-
 ```
 
-
-
-\## 🔌 API Endpoints
-
-
+## 🔌 API Endpoints
 
 Base URL:
 
-
-
 ```text
-
 http://localhost:5000/api/destinations
-
 ```
 
+| Method | Endpoint                               | Description                     |
+| ------ | -------------------------------------- | ------------------------------- |
+| GET    | `/api/destinations`                    | Get all destinations            |
+| GET    | `/api/destinations/:id`                | Get one destination             |
+| GET    | `/api/destinations?category=Mountains` | Filter destinations by category |
+| POST   | `/api/destinations`                    | Add a destination               |
+| PUT    | `/api/destinations/:id`                | Update a destination            |
+| DELETE | `/api/destinations/:id`                | Delete a destination            |
 
-
-| Method | Endpoint | Description |
-
-|---|---|---|
-
-| GET | /api/destinations | Get all destinations |
-
-| GET | /api/destinations/:id | Get one destination |
-
-| POST | /api/destinations | Add a destination |
-
-| PUT | /api/destinations/:id | Update a destination |
-
-| DELETE | /api/destinations/:id | Delete a destination |
-
-
-
-\## 🗄️ Destination Data
-
-
+## 🗄️ Destination Data
 
 Each destination can contain:
 
+* Name
+* Country
+* City
+* Description
+* Image URL
+* Category
+* Rating
+* Popularity
+* Featured status
 
+## ⚙️ Installation
 
-\- Name
-
-\- Country
-
-\- City
-
-\- Description
-
-\- Image URL
-
-\- Category
-
-\- Featured status
-
-
-
-\## ⚙️ Installation
-
-
-
-\### 1. Clone the repository
-
-
+### 1. Clone the repository
 
 ```bash
-
-git clone YOUR\_GITHUB\_REPOSITORY\_URL
-
+git clone YOUR_GITHUB_REPOSITORY_URL
 cd mern
-
 ```
 
-
-
-\### 2. Install backend dependencies
-
-
+### 2. Install backend dependencies
 
 ```bash
-
 cd backend
-
 npm install
-
 ```
 
-
-
-\### 3. Configure environment variables
-
-
+### 3. Configure environment variables
 
 Create a `.env` file inside the `backend` folder:
 
-
-
 ```env
-
-MONGO\_URI=YOUR\_MONGODB\_CONNECTION\_STRING
-
+MONGO_URI=YOUR_MONGODB_CONNECTION_STRING
 PORT=5000
-
 ```
 
-
-
-\### 4. Start the backend
-
-
+### 4. Start the backend
 
 ```bash
-
 npm run dev
-
 ```
-
-
 
 The backend runs on:
 
-
-
 ```text
-
 http://localhost:5000
-
 ```
 
-
-
-\### 5. Install frontend dependencies
-
-
+### 5. Install frontend dependencies
 
 Open another terminal:
 
-
-
 ```bash
-
 cd frontend
-
 npm install
-
 ```
 
-
-
-\### 6. Start the frontend
-
-
+### 6. Start the frontend
 
 ```bash
-
 npm run dev
-
 ```
-
-
 
 The frontend runs on:
 
-
-
 ```text
-
 http://localhost:5173
-
 ```
 
-
-
-\## 🔗 Frontend-Backend Integration
-
-
+## 🔗 Frontend-Backend Integration
 
 The React frontend retrieves destination information from the Express API using Axios.
 
-
-
 ```text
-
 React
-
-&#x20;  ↓
-
+  ↓
 Axios
-
-&#x20;  ↓
-
+  ↓
 Express API
-
-&#x20;  ↓
-
+  ↓
 Mongoose
-
-&#x20;  ↓
-
+  ↓
 MongoDB
-
 ```
 
-
+The Vite development server proxies `/api` requests to the Express backend during local development.
 
 Destination information displayed on the website is retrieved from the backend database.
 
-
-
-\## 🧪 API Testing
-
-
+## 🧪 API Testing
 
 The REST API was tested using Postman.
 
-
-
 Tested operations include:
 
+* Retrieve all destinations
+* Retrieve a single destination
+* Filter destinations by category
+* Add a destination
+* Update a destination
+* Delete a destination
 
+## 📄 Week 2 Implementation
 
-\- Retrieve all destinations
+The Week 2 task extends the original Wanderly platform with:
 
-\- Retrieve a single destination
+* Destination rating and popularity fields
+* Category filtering
+* Destination details page
+* React Router navigation
+* Loading and error states
+* Improved API integration
+* Updated project documentation
 
-\- Add a destination
+## 👩‍💻 Project
 
-\- Update a destination
+Built as a MERN Stack Development internship task.
 
-\- Delete a destination
-
-
-
-\## 👩‍💻 Project
-
-
-
-Built as a Week 1 MERN Stack Development task.
-
-
-
-\---
-
-
+---
 
 ⭐ Built with the MERN Stack
-
