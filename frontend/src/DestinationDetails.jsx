@@ -13,10 +13,38 @@ function DestinationDetails() {
   useEffect(() => {
     const fetchDestination = async () => {
       try {
-        const response = await axios.get(`/api/destinations/${id}`);
+        setLoading(true);
+
+        const API_URL =
+          import.meta.env.VITE_API_URL || "/api";
+
+        console.log(
+          "Fetching destination from:",
+          `${API_URL}/destinations/${id}`
+        );
+
+        const response = await axios.get(
+          `${API_URL}/destinations/${id}`
+        );
+
+        console.log(
+          "Destination response:",
+          response.data
+        );
+
         setDestination(response.data);
+        setError("");
       } catch (error) {
-        console.error("Error fetching destination:", error);
+        console.error(
+          "Error fetching destination:",
+          error
+        );
+
+        console.error(
+          "Error response:",
+          error.response
+        );
+
         setError("Unable to load destination.");
       } finally {
         setLoading(false);
@@ -37,8 +65,14 @@ function DestinationDetails() {
   if (error || !destination) {
     return (
       <div className="details-message">
-        <h2>{error || "Destination not found."}</h2>
-        <Link to="/" className="back-button">
+        <h2>
+          {error || "Destination not found."}
+        </h2>
+
+        <Link
+          to="/"
+          className="back-button"
+        >
           <ArrowLeft size={18} />
           Back to destinations
         </Link>
@@ -48,7 +82,10 @@ function DestinationDetails() {
 
   return (
     <div className="destination-details-page">
-      <Link to="/" className="back-button">
+      <Link
+        to="/"
+        className="back-button"
+      >
         <ArrowLeft size={18} />
         Back to Wanderly
       </Link>
@@ -69,7 +106,8 @@ function DestinationDetails() {
 
         <div className="details-location">
           <MapPin size={18} />
-          {destination.city}, {destination.country}
+          {destination.city},{" "}
+          {destination.country}
         </div>
 
         <p className="details-description">
@@ -79,12 +117,20 @@ function DestinationDetails() {
         <div className="details-info">
           <div className="info-card">
             <Star size={20} />
-            <strong>{destination.rating || 0}</strong>
+
+            <strong>
+              {destination.rating || 0}
+            </strong>
+
             <span>Rating</span>
           </div>
 
           <div className="info-card">
-            <strong>{destination.popularity || "Medium"}</strong>
+            <strong>
+              {destination.popularity ||
+                "Medium"}
+            </strong>
+
             <span>Popularity</span>
           </div>
         </div>
@@ -98,4 +144,3 @@ function DestinationDetails() {
 }
 
 export default DestinationDetails;
-
