@@ -29,18 +29,54 @@ function HomePage() {
       try {
         setLoading(true);
 
-        const response = await axios.get("/api/destinations");
-       
+        const API_URL = import.meta.env.VITE_API_URL || "/api";
+
+        console.log("=================================");
+        console.log("VITE_API_URL:", import.meta.env.VITE_API_URL);
+        console.log(
+          "FINAL API URL:",
+          `${API_URL}/destinations`
+        );
+        console.log("=================================");
+
+        const response = await axios.get(
+          `${API_URL}/destinations`
+        );
+
+        console.log("API RESPONSE:", response.data);
+        console.log(
+          "NUMBER OF DESTINATIONS:",
+          Array.isArray(response.data)
+            ? response.data.length
+            : "Response is not an array"
+        );
+
         setDestinations(
-  Array.isArray(response.data)
-    ? response.data
-    : response.data.destinations || []
-);
+          Array.isArray(response.data)
+            ? response.data
+            : response.data.destinations || []
+        );
 
         setError("");
       } catch (error) {
-        console.error("Error fetching destinations:", error);
-        setError("Unable to load destinations. Please try again.");
+        console.error(
+          "ERROR FETCHING DESTINATIONS:",
+          error
+        );
+
+        console.error(
+          "ERROR RESPONSE:",
+          error.response
+        );
+
+        console.error(
+          "ERROR MESSAGE:",
+          error.message
+        );
+
+        setError(
+          "Unable to load destinations. Please try again."
+        );
       } finally {
         setLoading(false);
       }
@@ -50,11 +86,15 @@ function HomePage() {
   }, []);
 
   // Search destinations
-  const filteredDestinations = destinations.filter((destination) => {
-    const text = `${destination.name} ${destination.country} ${destination.city} ${destination.category}`;
+  const filteredDestinations = destinations.filter(
+    (destination) => {
+      const text = `${destination.name} ${destination.country} ${destination.city} ${destination.category}`;
 
-    return text.toLowerCase().includes(search.toLowerCase());
-  });
+      return text
+        .toLowerCase()
+        .includes(search.toLowerCase());
+    }
+  );
 
   // Featured destinations
   const featuredDestinations = destinations.filter(
@@ -77,41 +117,72 @@ function HomePage() {
         <div className="nav-container">
           <div
             className="logo"
-            onClick={() => scrollToSection("home")}
+            onClick={() =>
+              scrollToSection("home")
+            }
           >
             <Compass size={30} />
             <span>Wanderly</span>
           </div>
 
-          <div className={`nav-links ${menuOpen ? "open" : ""}`}>
-            <button onClick={() => scrollToSection("home")}>
+          <div
+            className={`nav-links ${
+              menuOpen ? "open" : ""
+            }`}
+          >
+            <button
+              onClick={() =>
+                scrollToSection("home")
+              }
+            >
               Home
             </button>
 
-            <button onClick={() => scrollToSection("destinations")}>
+            <button
+              onClick={() =>
+                scrollToSection("destinations")
+              }
+            >
               Destinations
             </button>
 
-            <button onClick={() => scrollToSection("categories")}>
+            <button
+              onClick={() =>
+                scrollToSection("categories")
+              }
+            >
               Categories
             </button>
 
-            <button onClick={() => scrollToSection("about")}>
+            <button
+              onClick={() =>
+                scrollToSection("about")
+              }
+            >
               About
             </button>
           </div>
 
           <button
             className="menu-button"
-            onClick={() => setMenuOpen(!menuOpen)}
+            onClick={() =>
+              setMenuOpen(!menuOpen)
+            }
           >
-            {menuOpen ? <X size={25} /> : <Menu size={25} />}
+            {menuOpen ? (
+              <X size={25} />
+            ) : (
+              <Menu size={25} />
+            )}
           </button>
         </div>
       </nav>
 
       {/* HERO */}
-      <section className="hero" id="home">
+      <section
+        className="hero"
+        id="home"
+      >
         <div className="hero-overlay"></div>
 
         <div className="hero-content">
@@ -123,12 +194,15 @@ function HomePage() {
           <h1>
             Discover places
             <br />
-            <span>worth remembering.</span>
+            <span>
+              worth remembering.
+            </span>
           </h1>
 
           <p>
-            Find your next adventure, explore breathtaking destinations,
-            and create memories that last a lifetime.
+            Find your next adventure, explore
+            breathtaking destinations, and create
+            memories that last a lifetime.
           </p>
 
           <div className="search-box">
@@ -138,11 +212,15 @@ function HomePage() {
               type="text"
               placeholder="Search destinations, countries or categories..."
               value={search}
-              onChange={(e) => setSearch(e.target.value)}
+              onChange={(e) =>
+                setSearch(e.target.value)
+              }
             />
 
             <button
-              onClick={() => scrollToSection("destinations")}
+              onClick={() =>
+                scrollToSection("destinations")
+              }
             >
               Explore
               <ArrowRight size={18} />
@@ -159,12 +237,16 @@ function HomePage() {
               HANDPICKED FOR YOU
             </span>
 
-            <h2>Featured destinations</h2>
+            <h2>
+              Featured destinations
+            </h2>
           </div>
 
           <button
             className="view-all"
-            onClick={() => scrollToSection("destinations")}
+            onClick={() =>
+              scrollToSection("destinations")
+            }
           >
             View all
             <ArrowRight size={18} />
@@ -173,7 +255,9 @@ function HomePage() {
 
         {loading ? (
           <div className="empty-state">
-            <h3>Loading destinations...</h3>
+            <h3>
+              Loading destinations...
+            </h3>
           </div>
         ) : error ? (
           <div className="empty-state">
@@ -182,12 +266,14 @@ function HomePage() {
           </div>
         ) : (
           <div className="destination-grid">
-            {featuredDestinations.map((destination) => (
-              <DestinationCard
-                key={destination._id}
-                destination={destination}
-              />
-            ))}
+            {featuredDestinations.map(
+              (destination) => (
+                <DestinationCard
+                  key={destination._id}
+                  destination={destination}
+                />
+              )
+            )}
           </div>
         )}
       </section>
@@ -202,11 +288,13 @@ function HomePage() {
             FIND YOUR VIBE
           </span>
 
-          <h2>Explore by category</h2>
+          <h2>
+            Explore by category
+          </h2>
 
           <p>
-            Whatever kind of adventure you're looking for,
-            we've got a place for you.
+            Whatever kind of adventure you're
+            looking for, we've got a place for you.
           </p>
         </div>
 
@@ -217,23 +305,32 @@ function HomePage() {
             ["Adventure", "🧗"],
             ["Cultural", "🏛️"],
             ["Historical", "🏺"],
-            ["Nature & Wildlife", "🦁"],
-          ].map(([category, emoji]) => (
-            <button
-              className="category-card"
-              key={category}
-              onClick={() => {
-                setSearch(category);
-                scrollToSection("destinations");
-              }}
-            >
-              <span>{emoji}</span>
+            [
+              "Nature & Wildlife",
+              "🦁",
+            ],
+          ].map(
+            ([category, emoji]) => (
+              <button
+                className="category-card"
+                key={category}
+                onClick={() => {
+                  setSearch(category);
+                  scrollToSection(
+                    "destinations"
+                  );
+                }}
+              >
+                <span>{emoji}</span>
 
-              <strong>{category}</strong>
+                <strong>
+                  {category}
+                </strong>
 
-              <ArrowRight size={18} />
-            </button>
-          ))}
+                <ArrowRight size={18} />
+              </button>
+            )
+          )}
         </div>
       </section>
 
@@ -248,7 +345,9 @@ function HomePage() {
               EXPLORE
             </span>
 
-            <h2>All destinations</h2>
+            <h2>
+              All destinations
+            </h2>
           </div>
 
           <span className="destination-count">
@@ -258,31 +357,39 @@ function HomePage() {
 
         {loading ? (
           <div className="empty-state">
-            <h3>Loading destinations...</h3>
+            <h3>
+              Loading destinations...
+            </h3>
           </div>
         ) : error ? (
           <div className="empty-state">
             <Search size={40} />
             <h3>{error}</h3>
           </div>
-        ) : filteredDestinations.length === 0 ? (
+        ) : filteredDestinations.length ===
+          0 ? (
           <div className="empty-state">
             <Search size={40} />
 
-            <h3>No destinations found</h3>
+            <h3>
+              No destinations found
+            </h3>
 
             <p>
-              Try searching for another place or category.
+              Try searching for another
+              place or category.
             </p>
           </div>
         ) : (
           <div className="destination-grid">
-            {filteredDestinations.map((destination) => (
-              <DestinationCard
-                key={destination._id}
-                destination={destination}
-              />
-            ))}
+            {filteredDestinations.map(
+              (destination) => (
+                <DestinationCard
+                  key={destination._id}
+                  destination={destination}
+                />
+              )
+            )}
           </div>
         )}
       </section>
@@ -304,14 +411,20 @@ function HomePage() {
           </h2>
 
           <p>
-            Wanderly helps travelers discover beautiful places
-            around the world. From peaceful mountain escapes to
-            vibrant cultural cities, your next adventure starts here.
+            Wanderly helps travelers discover
+            beautiful places around the world.
+            From peaceful mountain escapes to
+            vibrant cultural cities, your next
+            adventure starts here.
           </p>
 
           <button
             className="primary-button"
-            onClick={() => scrollToSection("destinations")}
+            onClick={() =>
+              scrollToSection(
+                "destinations"
+              )
+            }
           >
             Start exploring
             <ArrowRight size={18} />
@@ -323,11 +436,14 @@ function HomePage() {
       <footer className="footer">
         <div className="footer-logo">
           <Compass size={24} />
-          <strong>Wanderly</strong>
+          <strong>
+            Wanderly
+          </strong>
         </div>
 
         <p>
-          Made for explorers who believe the journey matters.
+          Made for explorers who believe
+          the journey matters.
         </p>
 
         <div className="footer-heart">
@@ -340,7 +456,9 @@ function HomePage() {
 }
 
 // DESTINATION CARD
-function DestinationCard({ destination }) {
+function DestinationCard({
+  destination,
+}) {
   return (
     <article className="destination-card">
       <div className="card-image">
@@ -367,7 +485,8 @@ function DestinationCard({ destination }) {
       <div className="card-content">
         <div className="location">
           <MapPin size={15} />
-          {destination.city}, {destination.country}
+          {destination.city},{" "}
+          {destination.country}
         </div>
 
         <h3>
@@ -401,7 +520,9 @@ function App() {
 
       <Route
         path="/destination/:id"
-        element={<DestinationDetails />}
+        element={
+          <DestinationDetails />
+        }
       />
     </Routes>
   );
