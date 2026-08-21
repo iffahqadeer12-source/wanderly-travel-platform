@@ -1,10 +1,12 @@
 import { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
+import { useAuth } from "./AuthContext.jsx";
 import axios from "axios";
 import { ArrowLeft, MapPin, Star } from "lucide-react";
 
 function DestinationDetails() {
   const { id } = useParams();
+  const { token } = useAuth();
 
   const [destination, setDestination] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -33,7 +35,30 @@ function DestinationDetails() {
         );
 
         setDestination(response.data);
-        setError("");
+setError("");
+
+// Add destination to recently viewed if user is logged in
+if (token) {
+  try {
+    await axios.post(
+      `${API_URL}/users/recently-viewed/${id}`,
+      {},
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+
+    console.log("Added to recently viewed");
+  } catch (error) {
+    console.error(
+      "Could not update recently viewed:",
+      error
+    );
+  }
+}
+
       } catch (error) {
         console.error(
           "Error fetching destination:",
@@ -52,7 +77,8 @@ function DestinationDetails() {
     };
 
     fetchDestination();
-  }, [id]);
+  }, [id, token]);
+  
 
   if (loading) {
     return (

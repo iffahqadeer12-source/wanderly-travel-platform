@@ -1,3 +1,7 @@
+import Profile from "./Profile.jsx";
+import { useAuth } from "./AuthContext.jsx";
+import Register from "./Register.jsx";
+import Login from "./Login.jsx";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import {
@@ -17,6 +21,8 @@ import "./App.css";
 import DestinationDetails from "./DestinationDetails.jsx";
 
 function HomePage() {
+  const { user, logout } = useAuth();
+
   const [destinations, setDestinations] = useState([]);
   const [search, setSearch] = useState("");
   const [menuOpen, setMenuOpen] = useState(false);
@@ -161,6 +167,26 @@ function HomePage() {
             >
               About
             </button>
+            {user ? (
+  <>
+    <Link to="/profile" className="nav-profile">
+      👤 {user.name}
+    </Link>
+
+    <button
+      onClick={() => {
+        logout();
+        setMenuOpen(false);
+      }}
+    >
+      Logout
+    </button>
+  </>
+) : (
+  <Link to="/login" className="nav-login">
+    Login
+  </Link>
+)}
           </div>
 
           <button
@@ -456,9 +482,126 @@ function HomePage() {
 }
 
 // DESTINATION CARD
-function DestinationCard({
-  destination,
-}) {
+
+function DestinationCard({ destination }) {
+  const { user, token } = useAuth();
+  const [isFavorite, setIsFavorite] = useState(false);
+  const [favoriteLoading, setFavoriteLoading] = useState(false);
+
+  // Check if this destination is already a favorite
+  useEffect(() => {
+    const checkFavorite = async () => {
+      if (!user || !token) {
+        setIsFavorite(false);
+        return;
+      }
+
+      try {
+        const API_URL =
+          import.meta.env.VITE_API_URL || "/api";
+
+        const response = await axios.get(
+          `${API_URL}/users/favorites`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+
+        const favorites = response.data.favorites || [];
+
+        const alreadyFavorite = favorites.some(
+          (favorite) =>
+            favorite._id === destination._id
+        );
+
+        setIsFavorite(alreadyFavorite);
+      } catch (error) {
+        console.error(
+          "Error checking favorite:",
+          error
+        );
+      }
+    };
+
+    checkFavorite();
+  }, [user, token, destination._id]);
+
+  // Add / Remove favorite
+  const handleFavorite = async () => {
+    if (!user || !token) {
+      alert("Please login to add favorites.");
+      return;
+    }
+
+    if (favoriteLoading) return;
+
+    try {
+      setFavoriteLoading(true);
+
+      const API_URL =
+        import.meta.env.VITE_API_URL || "/api";
+
+      if (isFavorite) {
+        // REMOVE FAVORITE
+        const response = await axios.delete(
+          `${API_URL}/users/favorites/${destination._id}`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+
+        console.log(
+          "Favorite removed:",
+          response.data
+        );
+
+        setIsFavorite(false);
+
+        alert(
+          `${destination.name} removed from favorites`
+        );
+      } else {
+        // ADD FAVORITE
+        const response = await axios.post(
+          `${API_URL}/users/favorites/${destination._id}`,
+          {},
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+
+        console.log(
+          "Favorite added:",
+          response.data
+        );
+
+        setIsFavorite(true);
+
+        alert(
+          `${destination.name} added to favorites ❤️`
+        );
+      }
+    } catch (error) {
+      console.error(
+        "Favorite error:",
+        error
+      );
+
+      alert(
+        error.response?.data?.message ||
+          "Unable to update favorite."
+      );
+    } finally {
+      setFavoriteLoading(false);
+    }
+  };
+
   return (
     <article className="destination-card">
       <div className="card-image">
@@ -466,6 +609,29 @@ function DestinationCard({
           src={destination.imageUrl}
           alt={destination.name}
         />
+
+        {/* FAVORITE BUTTON */}
+        <button
+          className={`favorite-button ${
+            isFavorite ? "favorited" : ""
+          }`}
+          onClick={handleFavorite}
+          disabled={favoriteLoading}
+          title={
+            isFavorite
+              ? "Remove from favorites"
+              : "Add to favorites"
+          }
+        >
+          <Heart
+            size={20}
+            fill={
+              isFavorite
+                ? "currentColor"
+                : "none"
+            }
+          />
+        </button>
 
         <span className="category-badge">
           {destination.category}
@@ -489,13 +655,9 @@ function DestinationCard({
           {destination.country}
         </div>
 
-        <h3>
-          {destination.name}
-        </h3>
+        <h3>{destination.name}</h3>
 
-        <p>
-          {destination.description}
-        </p>
+        <p>{destination.description}</p>
 
         <Link
           to={`/destination/${destination._id}`}
@@ -509,6 +671,7 @@ function DestinationCard({
   );
 }
 
+
 // MAIN APP ROUTES
 function App() {
   return (
@@ -516,6 +679,18 @@ function App() {
       <Route
         path="/"
         element={<HomePage />}
+      />
+      <Route
+        path="/login"
+        element={<Login />}
+      />
+      <Route
+        path="/register"
+        element={<Register />}
+      />
+      <Route
+        path="/profile"
+        element={<Profile />}
       />
 
       <Route
