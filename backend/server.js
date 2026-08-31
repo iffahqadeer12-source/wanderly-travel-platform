@@ -6,7 +6,7 @@ const connectDB = require("./config/db");
 const destinationRoutes = require("./routes/destinationRoutes");
 const authRoutes = require("./routes/authRoutes");
 const userRoutes = require("./routes/userRoutes");
-
+const tripRoutes = require("./routes/tripRoutes");
 dotenv.config();
 
 const app = express();
@@ -19,6 +19,7 @@ connectDB();
 app.use("/api/destinations", destinationRoutes);
 app.use("/api/auth", authRoutes);
 app.use("/api/users", userRoutes);
+app.use("/api/trips", tripRoutes);
 
 app.get("/", (req, res) => {
   res.send("Welcome to Wanderly API");

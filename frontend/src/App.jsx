@@ -1,3 +1,4 @@
+import TripPlanner from "./TripPlanner.jsx";
 import Profile from "./Profile.jsx";
 import { useAuth } from "./AuthContext.jsx";
 import Register from "./Register.jsx";
@@ -698,6 +699,10 @@ function App() {
         element={
           <DestinationDetails />
         }
+      />
+      <Route
+        path="/trips"
+        element={<TripPlanner />}
       />
     </Routes>
   );
