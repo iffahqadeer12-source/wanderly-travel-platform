@@ -169,6 +169,13 @@ function HomePage() {
             >
               About
             </button>
+            <Link
+  to="/trips"
+  onClick={() => setMenuOpen(false)}
+  className="nav-trips"
+>
+  ✈️ Trips
+</Link>
             {user ? (
   <>
     <Link to="/profile" className="nav-profile">
