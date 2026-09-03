@@ -9,6 +9,7 @@ import {
   CalendarDays,
   Users,
   Clock,
+  Star,
 } from "lucide-react";
 import { useAuth } from "./AuthContext.jsx";
 
@@ -22,9 +23,16 @@ function TripPlanner() {
   const [loading, setLoading] = useState(true);
   const [message, setMessage] = useState("");
   const [error, setError] = useState("");
+  const [showCreateForm, setShowCreateForm] = useState(false);
 
-  const [showCreateForm, setShowCreateForm] =
-    useState(false);
+  const [favoriteTrips, setFavoriteTrips] = useState(() => {
+    const savedFavorites =
+      localStorage.getItem("wanderlyFavoriteTrips");
+
+    return savedFavorites
+      ? JSON.parse(savedFavorites)
+      : [];
+  });
 
   const [tripForm, setTripForm] = useState({
     tripName: "",
@@ -41,7 +49,10 @@ function TripPlanner() {
     },
   };
 
+  // ===============================
   // GET USER TRIPS
+  // ===============================
+
   const fetchTrips = async () => {
     try {
       setLoading(true);
@@ -73,7 +84,40 @@ function TripPlanner() {
     }
   }, [token]);
 
+  // ===============================
+  // SAVE FAVORITES
+  // ===============================
+
+  useEffect(() => {
+    localStorage.setItem(
+      "wanderlyFavoriteTrips",
+      JSON.stringify(favoriteTrips)
+    );
+  }, [favoriteTrips]);
+
+  // ===============================
+  // TOGGLE FAVORITE
+  // ===============================
+
+  const toggleFavorite = (tripId) => {
+    setFavoriteTrips((prev) => {
+      if (prev.includes(tripId)) {
+        setMessage("Removed from favorites.");
+        return prev.filter(
+          (id) => id !== tripId
+        );
+      }
+
+      setMessage("Added to favorites! ⭐");
+
+      return [...prev, tripId];
+    });
+  };
+
+  // ===============================
   // CREATE TRIP
+  // ===============================
+
   const handleCreateTrip = async (e) => {
     e.preventDefault();
 
@@ -107,9 +151,7 @@ function TripPlanner() {
         `${API_URL}/trips`,
         {
           ...tripForm,
-          travelers: Number(
-            tripForm.travelers
-          ),
+          travelers: Number(tripForm.travelers),
         },
         authConfig
       );
@@ -119,7 +161,9 @@ function TripPlanner() {
         ...prev,
       ]);
 
-      setMessage("Trip created successfully! 🎉");
+      setMessage(
+        "Trip created successfully! 🎉"
+      );
 
       setTripForm({
         tripName: "",
@@ -144,7 +188,10 @@ function TripPlanner() {
     }
   };
 
+  // ===============================
   // DELETE TRIP
+  // ===============================
+
   const handleDeleteTrip = async (tripId) => {
     const confirmed = window.confirm(
       "Are you sure you want to delete this trip?"
@@ -164,7 +211,15 @@ function TripPlanner() {
         )
       );
 
-      setMessage("Trip deleted successfully.");
+      setFavoriteTrips((prev) =>
+        prev.filter(
+          (id) => id !== tripId
+        )
+      );
+
+      setMessage(
+        "Trip deleted successfully."
+      );
     } catch (err) {
       console.error(
         "Delete trip error:",
@@ -178,7 +233,10 @@ function TripPlanner() {
     }
   };
 
+  // ===============================
   // DATE FORMAT
+  // ===============================
+
   const formatDate = (date) => {
     return new Date(date).toLocaleDateString(
       "en-US",
@@ -190,7 +248,10 @@ function TripPlanner() {
     );
   };
 
+  // ===============================
   // CALCULATE DAYS
+  // ===============================
+
   const calculateDays = (
     startDate,
     endDate
@@ -209,11 +270,49 @@ function TripPlanner() {
     );
   };
 
+  // ===============================
+  // DASHBOARD CALCULATIONS
+  // ===============================
+
+  const upcomingTrips = trips.filter(
+    (trip) =>
+      new Date(trip.startDate) >=
+      new Date()
+  );
+
+  const completedTrips = trips.filter(
+    (trip) =>
+      new Date(trip.endDate) <
+      new Date()
+  );
+
+  const totalPlannedDays = trips.reduce(
+    (total, trip) =>
+      total +
+      calculateDays(
+        trip.startDate,
+        trip.endDate
+      ),
+    0
+  );
+
+  const favoriteTripList = trips.filter(
+    (trip) =>
+      favoriteTrips.includes(trip._id)
+  );
+
+  // ===============================
+  // LOGIN CHECK
+  // ===============================
+
   if (!token) {
     return (
       <div className="trip-page">
         <div className="trip-message">
-          <h2>Please login to plan a trip.</h2>
+
+          <h2>
+            Please login to plan a trip.
+          </h2>
 
           <Link
             to="/login"
@@ -221,15 +320,23 @@ function TripPlanner() {
           >
             Login
           </Link>
+
         </div>
       </div>
     );
   }
 
+  // ===============================
+  // MAIN PAGE
+  // ===============================
+
   return (
     <div className="trip-page">
 
-      {/* HEADER */}
+      {/* ===============================
+          HEADER
+      =============================== */}
+
       <div className="trip-header">
 
         <Link
@@ -241,16 +348,20 @@ function TripPlanner() {
         </Link>
 
         <div className="trip-title">
+
           <span className="eyebrow">
             YOUR JOURNEY
           </span>
 
-          <h1>Trip Planner</h1>
+          <h1>
+            Trip Planner
+          </h1>
 
           <p>
             Plan your perfect adventure
             day by day.
           </p>
+
         </div>
 
         <button
@@ -267,7 +378,10 @@ function TripPlanner() {
 
       </div>
 
-      {/* MESSAGES */}
+      {/* ===============================
+          MESSAGES
+      =============================== */}
+
       {message && (
         <div className="success-message">
           {message}
@@ -280,11 +394,16 @@ function TripPlanner() {
         </div>
       )}
 
-      {/* CREATE FORM */}
+      {/* ===============================
+          CREATE TRIP FORM
+      =============================== */}
+
       {showCreateForm && (
         <section className="create-trip-card">
 
-          <h2>Create a new trip</h2>
+          <h2>
+            Create a new trip
+          </h2>
 
           <form
             onSubmit={handleCreateTrip}
@@ -293,6 +412,7 @@ function TripPlanner() {
             <div className="form-grid">
 
               <div className="form-group">
+
                 <label>
                   Trip Name *
                 </label>
@@ -311,9 +431,11 @@ function TripPlanner() {
                     })
                   }
                 />
+
               </div>
 
               <div className="form-group">
+
                 <label>
                   Destination *
                 </label>
@@ -332,9 +454,11 @@ function TripPlanner() {
                     })
                   }
                 />
+
               </div>
 
               <div className="form-group">
+
                 <label>
                   Start Date *
                 </label>
@@ -352,9 +476,11 @@ function TripPlanner() {
                     })
                   }
                 />
+
               </div>
 
               <div className="form-group">
+
                 <label>
                   End Date *
                 </label>
@@ -372,9 +498,11 @@ function TripPlanner() {
                     })
                   }
                 />
+
               </div>
 
               <div className="form-group">
+
                 <label>
                   Number of Travelers *
                 </label>
@@ -393,9 +521,11 @@ function TripPlanner() {
                     })
                   }
                 />
+
               </div>
 
               <div className="form-group full-width">
+
                 <label>
                   Description
                 </label>
@@ -413,6 +543,7 @@ function TripPlanner() {
                     })
                   }
                 />
+
               </div>
 
             </div>
@@ -440,33 +571,291 @@ function TripPlanner() {
             </div>
 
           </form>
+
         </section>
       )}
 
-      {/* TRIPS */}
+      {/* ===============================
+          TRIP DASHBOARD
+      =============================== */}
+
+      <section className="trip-dashboard">
+
+        <div className="dashboard-heading">
+
+          <div>
+
+            <span className="eyebrow">
+              TRIP DASHBOARD
+            </span>
+
+            <h2>
+              Your travel overview
+            </h2>
+
+            <p>
+              Keep track of your upcoming
+              adventures and planned journeys.
+            </p>
+
+          </div>
+
+        </div>
+
+        <div className="dashboard-grid">
+
+          {/* TOTAL */}
+
+          <div className="dashboard-card">
+
+            <div className="dashboard-icon">
+              <CalendarDays size={22} />
+            </div>
+
+            <div>
+
+              <span>
+                Total Trips
+              </span>
+
+              <strong>
+                {trips.length}
+              </strong>
+
+            </div>
+
+          </div>
+
+          {/* UPCOMING */}
+
+          <div className="dashboard-card">
+
+            <div className="dashboard-icon">
+              <MapPin size={22} />
+            </div>
+
+            <div>
+
+              <span>
+                Upcoming Trips
+              </span>
+
+              <strong>
+                {upcomingTrips.length}
+              </strong>
+
+            </div>
+
+          </div>
+
+          {/* COMPLETED */}
+
+          <div className="dashboard-card">
+
+            <div className="dashboard-icon">
+              <Clock size={22} />
+            </div>
+
+            <div>
+
+              <span>
+                Completed Trips
+              </span>
+
+              <strong>
+                {completedTrips.length}
+              </strong>
+
+            </div>
+
+          </div>
+
+          {/* PLANNED DAYS */}
+
+          <div className="dashboard-card">
+
+            <div className="dashboard-icon">
+              <Users size={22} />
+            </div>
+
+            <div>
+
+              <span>
+                Total Planned Days
+              </span>
+
+              <strong>
+                {totalPlannedDays}
+              </strong>
+
+            </div>
+
+          </div>
+
+        </div>
+
+      </section>
+
+      {/* ===============================
+          FAVORITE TRIPS
+      =============================== */}
+
+      {favoriteTripList.length > 0 && (
+
+        <section className="trips-section">
+
+          <div className="section-heading">
+
+            <div>
+
+              <span className="eyebrow">
+                FAVORITES
+              </span>
+
+              <h2>
+                Your favorite trips
+              </h2>
+
+              <p>
+                Quick access to the trips
+                you love most.
+              </p>
+
+            </div>
+
+            <span className="destination-count">
+              {favoriteTripList.length} favorites
+            </span>
+
+          </div>
+
+          <div className="trip-grid">
+
+            {favoriteTripList.map(
+              (trip) => (
+
+                <article
+                  className="trip-card"
+                  key={trip._id}
+                >
+
+                  <div className="trip-card-top">
+
+                    <span className="trip-status">
+                      {trip.status}
+                    </span>
+
+                    <button
+                      className="delete-trip"
+                      onClick={() =>
+                        toggleFavorite(
+                          trip._id
+                        )
+                      }
+                      title="Remove favorite"
+                    >
+                      <Star
+                        size={18}
+                        fill="currentColor"
+                      />
+                    </button>
+
+                  </div>
+
+                  <h3>
+                    {trip.tripName}
+                  </h3>
+
+                  <div className="trip-detail">
+
+                    <MapPin size={17} />
+
+                    <span>
+                      {trip.destination}
+                    </span>
+
+                  </div>
+
+                  <div className="trip-detail">
+
+                    <CalendarDays size={17} />
+
+                    <span>
+                      {formatDate(
+                        trip.startDate
+                      )}{" "}
+                      —{" "}
+                      {formatDate(
+                        trip.endDate
+                      )}
+                    </span>
+
+                  </div>
+
+                  <Link
+                    to={`/trip/${trip._id}`}
+                    className="primary-button trip-open-button"
+                  >
+                    Open Trip
+                  </Link>
+
+                </article>
+
+              )
+            )}
+
+          </div>
+
+        </section>
+
+      )}
+
+      {/* ===============================
+          RECENT TRIPS
+      =============================== */}
+
       <section className="trips-section">
 
         <div className="section-heading">
+
           <div>
+
             <span className="eyebrow">
-              MY TRIPS
+              RECENT TRIPS
             </span>
 
             <h2>
               Your adventures
             </h2>
+
+            <p>
+              Your latest planned journeys.
+            </p>
+
           </div>
 
           <span className="destination-count">
             {trips.length} trips
           </span>
+
         </div>
 
+        {/* LOADING */}
+
         {loading ? (
+
           <div className="trip-message">
-            <h3>Loading your trips...</h3>
+
+            <h3>
+              Loading your trips...
+            </h3>
+
           </div>
+
         ) : trips.length === 0 ? (
+
+          /* EMPTY */
+
           <div className="trip-empty">
 
             <CalendarDays size={48} />
@@ -491,105 +880,196 @@ function TripPlanner() {
             </button>
 
           </div>
+
         ) : (
+
+          /* TRIPS */
+
           <div className="trip-grid">
 
-            {trips.map((trip) => (
-              <article
-                className="trip-card"
-                key={trip._id}
-              >
+            {trips.map((trip) => {
 
-                <div className="trip-card-top">
+              const isFavorite =
+                favoriteTrips.includes(
+                  trip._id
+                );
 
-                  <span className="trip-status">
-                    {trip.status}
-                  </span>
+              return (
 
-                  <button
-                    className="delete-trip"
-                    onClick={() =>
-                      handleDeleteTrip(
-                        trip._id
-                      )
-                    }
-                    title="Delete trip"
-                  >
-                    <Trash2 size={18} />
-                  </button>
-
-                </div>
-
-                <h3>
-                  {trip.tripName}
-                </h3>
-
-                <div className="trip-detail">
-                  <MapPin size={17} />
-                  <span>
-                    {trip.destination}
-                  </span>
-                </div>
-
-                <div className="trip-detail">
-                  <CalendarDays
-                    size={17}
-                  />
-
-                  <span>
-                    {formatDate(
-                      trip.startDate
-                    )}{" "}
-                    —{" "}
-                    {formatDate(
-                      trip.endDate
-                    )}
-                  </span>
-                </div>
-
-                <div className="trip-detail">
-                  <Users size={17} />
-
-                  <span>
-                    {trip.travelers}{" "}
-                    {trip.travelers === 1
-                      ? "traveler"
-                      : "travelers"}
-                  </span>
-                </div>
-
-                <div className="trip-detail">
-                  <Clock size={17} />
-
-                  <span>
-                    {calculateDays(
-                      trip.startDate,
-                      trip.endDate
-                    )}{" "}
-                    days
-                  </span>
-                </div>
-
-                {trip.description && (
-                  <p className="trip-description">
-                    {trip.description}
-                  </p>
-                )}
-
-                <Link
-                  to={`/trip/${trip._id}`}
-                  className="primary-button trip-open-button"
+                <article
+                  className="trip-card"
+                  key={trip._id}
                 >
-                  Open Trip
-                </Link>
 
-              </article>
-            ))}
+                  {/* CARD TOP */}
+
+                  <div className="trip-card-top">
+
+                    <span className="trip-status">
+                      {trip.status}
+                    </span>
+
+                    <div
+                      style={{
+                        display: "flex",
+                        gap: "8px",
+                        alignItems: "center",
+                      }}
+                    >
+
+                      {/* FAVORITE */}
+
+                      <button
+                        className="delete-trip"
+                        onClick={() =>
+                          toggleFavorite(
+                            trip._id
+                          )
+                        }
+                        title={
+                          isFavorite
+                            ? "Remove favorite"
+                            : "Add to favorites"
+                        }
+                        style={{
+                          color: isFavorite
+                            ? "#f5b301"
+                            : "inherit",
+                        }}
+                      >
+                        <Star
+                          size={18}
+                          fill={
+                            isFavorite
+                              ? "currentColor"
+                              : "none"
+                          }
+                        />
+                      </button>
+
+                      {/* DELETE */}
+
+                      <button
+                        className="delete-trip"
+                        onClick={() =>
+                          handleDeleteTrip(
+                            trip._id
+                          )
+                        }
+                        title="Delete trip"
+                      >
+                        <Trash2 size={18} />
+                      </button>
+
+                    </div>
+
+                  </div>
+
+                  {/* NAME */}
+
+                  <h3>
+                    {trip.tripName}
+                  </h3>
+
+                  {/* DESTINATION */}
+
+                  <div className="trip-detail">
+
+                    <MapPin size={17} />
+
+                    <span>
+                      {trip.destination}
+                    </span>
+
+                  </div>
+
+                  {/* DATES */}
+
+                  <div className="trip-detail">
+
+                    <CalendarDays
+                      size={17}
+                    />
+
+                    <span>
+                      {formatDate(
+                        trip.startDate
+                      )}{" "}
+                      —{" "}
+                      {formatDate(
+                        trip.endDate
+                      )}
+                    </span>
+
+                  </div>
+
+                  {/* TRAVELERS */}
+
+                  <div className="trip-detail">
+
+                    <Users size={17} />
+
+                    <span>
+
+                      {trip.travelers}{" "}
+
+                      {trip.travelers === 1
+                        ? "traveler"
+                        : "travelers"}
+
+                    </span>
+
+                  </div>
+
+                  {/* DAYS */}
+
+                  <div className="trip-detail">
+
+                    <Clock size={17} />
+
+                    <span>
+
+                      {calculateDays(
+                        trip.startDate,
+                        trip.endDate
+                      )}{" "}
+
+                      days
+
+                    </span>
+
+                  </div>
+
+                  {/* DESCRIPTION */}
+
+                  {trip.description && (
+
+                    <p className="trip-description">
+                      {trip.description}
+                    </p>
+
+                  )}
+
+                  {/* OPEN */}
+
+                  <Link
+                    to={`/trip/${trip._id}`}
+                    className="primary-button trip-open-button"
+                  >
+                    Open Trip
+                  </Link>
+
+                </article>
+
+              );
+            })}
 
           </div>
+
         )}
 
       </section>
+
     </div>
   );
 }

@@ -34,6 +34,7 @@ router.put("/:id", protect, updateTrip);
 
 // Delete trip
 router.delete("/:id", protect, deleteTrip);
+router.post("/:id/days", protect, addItineraryDay);
 // Add itinerary day
 router.post(
   "/:id/days",

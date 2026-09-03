@@ -12,6 +12,7 @@ const createTrip = async (req, res) => {
       description,
     } = req.body;
 
+    // Validate required fields
     if (
       !tripName ||
       !destination ||
@@ -24,20 +25,51 @@ const createTrip = async (req, res) => {
       });
     }
 
-    if (new Date(endDate) < new Date(startDate)) {
+    // Convert dates
+    const start = new Date(startDate);
+    const end = new Date(endDate);
+
+    // Validate dates
+    if (isNaN(start.getTime()) || isNaN(end.getTime())) {
+      return res.status(400).json({
+        message: "Please provide valid start and end dates",
+      });
+    }
+
+    if (end < start) {
       return res.status(400).json({
         message: "End date cannot be before start date",
       });
     }
 
+    // Automatically create itinerary days
+    const itinerary = [];
+    const currentDate = new Date(start);
+
+    let dayNumber = 1;
+
+    while (currentDate <= end) {
+      itinerary.push({
+        day: dayNumber,
+        date: new Date(currentDate),
+        activities: [],
+      });
+
+      currentDate.setDate(currentDate.getDate() + 1);
+      dayNumber++;
+    }
+
+    // Create trip
     const trip = await Trip.create({
       user: req.user._id,
       tripName,
       destination,
-      startDate,
-      endDate,
-      travelers,
-      description,
+      startDate: start,
+      endDate: end,
+      travelers: Number(travelers),
+      description: description || "",
+      status: "Planning",
+      itinerary,
     });
 
     res.status(201).json({
@@ -120,6 +152,7 @@ const updateTrip = async (req, res) => {
       });
     }
 
+    // Validate dates if both are provided
     if (startDate && endDate) {
       if (new Date(endDate) < new Date(startDate)) {
         return res.status(400).json({
@@ -128,13 +161,33 @@ const updateTrip = async (req, res) => {
       }
     }
 
-    if (tripName !== undefined) trip.tripName = tripName;
-    if (destination !== undefined) trip.destination = destination;
-    if (startDate !== undefined) trip.startDate = startDate;
-    if (endDate !== undefined) trip.endDate = endDate;
-    if (travelers !== undefined) trip.travelers = travelers;
-    if (description !== undefined) trip.description = description;
-    if (status !== undefined) trip.status = status;
+    if (tripName !== undefined) {
+      trip.tripName = tripName;
+    }
+
+    if (destination !== undefined) {
+      trip.destination = destination;
+    }
+
+    if (startDate !== undefined) {
+      trip.startDate = startDate;
+    }
+
+    if (endDate !== undefined) {
+      trip.endDate = endDate;
+    }
+
+    if (travelers !== undefined) {
+      trip.travelers = travelers;
+    }
+
+    if (description !== undefined) {
+      trip.description = description;
+    }
+
+    if (status !== undefined) {
+      trip.status = status;
+    }
 
     const updatedTrip = await trip.save();
 
@@ -278,14 +331,25 @@ const updateActivity = async (req, res) => {
       category,
     } = req.body;
 
-    if (name !== undefined) activity.name = name;
-    if (location !== undefined)
+    if (name !== undefined) {
+      activity.name = name;
+    }
+
+    if (location !== undefined) {
       activity.location = location;
-    if (time !== undefined) activity.time = time;
-    if (description !== undefined)
+    }
+
+    if (time !== undefined) {
+      activity.time = time;
+    }
+
+    if (description !== undefined) {
       activity.description = description;
-    if (category !== undefined)
+    }
+
+    if (category !== undefined) {
       activity.category = category;
+    }
 
     await trip.save();
 
@@ -350,6 +414,7 @@ const deleteActivity = async (req, res) => {
     });
   }
 };
+
 // ADD ITINERARY DAY
 const addItineraryDay = async (req, res) => {
   try {
@@ -387,13 +452,18 @@ const addItineraryDay = async (req, res) => {
       trip,
     });
   } catch (error) {
-    console.error("Add itinerary day error:", error);
+    console.error(
+      "Add itinerary day error:",
+      error
+    );
 
     res.status(500).json({
       message: "Server error while adding itinerary day",
     });
   }
 };
+
+// EXPORT CONTROLLERS
 module.exports = {
   createTrip,
   getTrips,

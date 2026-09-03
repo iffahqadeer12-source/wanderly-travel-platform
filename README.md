@@ -1,241 +1,388 @@
-# 🌍 Wanderly - Travel Destination Platform
+# 🌍 Wanderly - Travel & Itinerary Management Platform
 
-A full-stack Travel & Tourism platform built using the MERN Stack.
+Wanderly is a full-stack Travel & Tourism platform built using the MERN stack. It allows users to explore destinations, create trips, manage itineraries, add activities, and organize their travel plans from a single dashboard.
 
-## 🚀 Project Overview
+## 🚀 Live Demo
 
-Wanderly is a travel destination platform that allows users to explore destinations, search for places, browse destinations by category, view featured locations, and open detailed destination pages.
+Frontend: https://wanderly-frontend-three.vercel.app
 
-The application uses MongoDB to store destination data and connects the React frontend to a Node.js and Express.js backend API.
+Backend API: https://wanderly-travel-platform.vercel.app
+
+---
+
+## 📌 Features
+
+### 🔐 User Authentication
+- User registration
+- User login
+- JWT-based authentication
+- Protected routes
+- Secure password hashing using bcrypt
+- Logout functionality
+
+### 🌍 Destinations
+- View travel destinations
+- Search destinations
+- View destination details
+- Featured destinations
+- Destination categories
+- Destination API integration
+
+### ✈️ Trip Management
+Users can:
+
+- Create a new trip
+- View all personal trips
+- Open individual trip details
+- Edit trips
+- Delete trips
+- Set trip status
+- Specify number of travelers
+- Add trip descriptions
+
+### 🗓️ Itinerary Management
+Each trip can contain multiple itinerary days.
+
+Users can:
+
+- Add itinerary days
+- Add multiple activities to each day
+- Edit activities
+- Delete activities
+- Organize activities by day
+
+Each activity includes:
+
+- Activity name
+- Location
+- Time
+- Category
+- Description
+
+### 📊 Trip Dashboard
+The dashboard displays:
+
+- Total Trips
+- Upcoming Trips
+- Completed Trips
+- Total Planned Days
+- Recent Trips
+- Favorite Trips
+
+### ⭐ Favorite Trips
+Users can mark trips as favorites and easily access their favorite travel plans.
+
+### 📱 Responsive Design
+The platform is designed to work across:
+
+- Desktop
+- Tablet
+- Mobile devices
+
+---
 
 ## 🛠️ Technologies Used
 
 ### Frontend
-
-* React.js
-* Vite
-* React Router DOM
-* Axios
-* Lucide React
-* CSS
-
-### Backend
-
-* Node.js
-* Express.js
-* Mongoose
-* CORS
-* dotenv
-
-### Database
-
-* MongoDB
-
-### API Testing
-
-* Postman
-
-## ✨ Features
-
-### Frontend
-
-* Responsive travel website
-* Hero section
-* Featured destinations
-* All destinations
-* Search destinations
-* Category-based browsing
-* Destination details page
-* Destination image, location, description, rating, and popularity
-* Loading states
-* Error handling
-* Empty search results handling
-* React Router navigation
-* About section
+- React.js
+- Vite
+- Axios
+- React Router
+- Lucide React
+- CSS
 
 ### Backend
+- Node.js
+- Express.js
+- MongoDB
+- Mongoose
+- JWT
+- bcryptjs
+- CORS
+- dotenv
 
-* REST API
-* MongoDB destination storage
-* Full CRUD functionality
-* Get all destinations
-* Get a single destination
-* Add destinations
-* Update destinations
-* Delete destinations
-* Filter destinations by category
-* Rating and popularity fields
+### Deployment
+- Vercel
+- MongoDB Atlas
+- GitHub
 
-## 📁 Project Structure
+---
+
+## 📂 Project Structure
 
 ```text
-mern/
+Wanderly/
 │
 ├── backend/
 │   ├── config/
 │   │   └── db.js
+│   │
 │   ├── controllers/
-│   │   └── destinationController.js
+│   │   ├── authController.js
+│   │   ├── destinationController.js
+│   │   └── tripController.js
+│   │
+│   ├── middleware/
+│   │   └── authMiddleware.js
+│   │
 │   ├── models/
-│   │   └── Destination.js
+│   │   ├── User.js
+│   │   ├── Destination.js
+│   │   └── Trip.js
+│   │
 │   ├── routes/
-│   │   └── destinationRoutes.js
+│   │   ├── authRoutes.js
+│   │   ├── destinationRoutes.js
+│   │   └── tripRoutes.js
+│   │
 │   ├── .env
-│   ├── .gitignore
-│   ├── package.json
-│   └── server.js
+│   ├── server.js
+│   └── package.json
 │
 ├── frontend/
 │   ├── src/
 │   │   ├── App.jsx
 │   │   ├── App.css
-│   │   ├── DestinationDetails.jsx
-│   │   ├── index.css
+│   │   ├── AuthContext.jsx
+│   │   ├── Login.jsx
+│   │   ├── Register.jsx
+│   │   ├── Profile.jsx
+│   │   ├── TripPlanner.jsx
+│   │   ├── TripDetails.jsx
 │   │   └── main.jsx
+│   │
+│   ├── .env
 │   ├── package.json
 │   └── vite.config.js
 │
 └── README.md
-```
+🔌 API Endpoints
+Authentication
+Method	Endpoint	Description
+POST	/api/auth/register	Register a user
+POST	/api/auth/login	Login user
+Destinations
+Method	Endpoint	Description
+GET	/api/destinations	Get all destinations
+GET	/api/destinations/:id	Get single destination
+POST	/api/destinations	Add destination
+PUT	/api/destinations/:id	Update destination
+DELETE	/api/destinations/:id	Delete destination
+Trips
+Method	Endpoint	Description
+POST	/api/trips	Create trip
+GET	/api/trips	Get user's trips
+GET	/api/trips/:id	Get single trip
+PUT	/api/trips/:id	Update trip
+DELETE	/api/trips/:id	Delete trip
+Itinerary
+Method	Endpoint	Description
+POST	/api/trips/:id/days	Add itinerary day
+POST	/api/trips/:id/days/:dayId/activities	Add activity
+PUT	/api/trips/:id/days/:dayId/activities/:activityId	Update activity
+DELETE	/api/trips/:id/days/:dayId/activities/:activityId	Delete activity
+🗄️ Database Models
+User
 
-## 🔌 API Endpoints
+The User model stores:
 
-Base URL:
+Name
+Email
+Password
+Profile information
+Favorites
+Destination
 
-```text
-http://localhost:5000/api/destinations
-```
+The Destination model stores:
 
-| Method | Endpoint                               | Description                     |
-| ------ | -------------------------------------- | ------------------------------- |
-| GET    | `/api/destinations`                    | Get all destinations            |
-| GET    | `/api/destinations/:id`                | Get one destination             |
-| GET    | `/api/destinations?category=Mountains` | Filter destinations by category |
-| POST   | `/api/destinations`                    | Add a destination               |
-| PUT    | `/api/destinations/:id`                | Update a destination            |
-| DELETE | `/api/destinations/:id`                | Delete a destination            |
+Name
+Country
+City
+Description
+Image URL
+Category
+Featured status
+Trip
 
-## 🗄️ Destination Data
+The Trip model stores:
 
-Each destination can contain:
+User
+Trip Name
+Destination
+Start Date
+End Date
+Number of Travelers
+Description
+Status
+Itinerary
+Itinerary
 
-* Name
-* Country
-* City
-* Description
-* Image URL
-* Category
-* Rating
-* Popularity
-* Featured status
+Each itinerary contains:
 
-## ⚙️ Installation
+Day number
+Date
+Activities
 
-### 1. Clone the repository
+Each activity contains:
 
-```bash
+Name
+Location
+Time
+Category
+Description
+🔑 Environment Variables
+Backend
+
+Create a .env file inside the backend folder:
+
+PORT=5000
+MONGO_URI=your_mongodb_connection_string
+JWT_SECRET=your_jwt_secret
+Frontend
+
+Create a .env file inside the frontend folder:
+
+VITE_API_URL=http://localhost:5000/api
+
+For production, use your deployed backend API URL.
+
+💻 Installation
+1. Clone the Repository
 git clone YOUR_GITHUB_REPOSITORY_URL
-cd mern
-```
-
-### 2. Install backend dependencies
-
-```bash
+2. Navigate to the Project
+cd Wanderly
+3. Install Backend Dependencies
 cd backend
 npm install
-```
+4. Configure Backend Environment Variables
 
-### 3. Configure environment variables
+Create the .env file and add:
 
-Create a `.env` file inside the `backend` folder:
-
-```env
-MONGO_URI=YOUR_MONGODB_CONNECTION_STRING
 PORT=5000
-```
-
-### 4. Start the backend
-
-```bash
+MONGO_URI=your_mongodb_connection_string
+JWT_SECRET=your_jwt_secret
+5. Start Backend
 npm run dev
-```
 
-The backend runs on:
+The backend will run on:
 
-```text
 http://localhost:5000
-```
-
-### 5. Install frontend dependencies
+🎨 Install Frontend Dependencies
 
 Open another terminal:
 
-```bash
 cd frontend
 npm install
-```
-
-### 6. Start the frontend
-
-```bash
+Start Frontend
 npm run dev
-```
 
-The frontend runs on:
+The frontend will run on:
 
-```text
 http://localhost:5173
-```
+🔒 Security
 
-## 🔗 Frontend-Backend Integration
+The application uses:
 
-The React frontend retrieves destination information from the Express API using Axios.
+JWT authentication
+Protected API routes
+Password hashing with bcrypt
+Environment variables for sensitive configuration
+User-specific trip access
 
-```text
-React
-  ↓
-Axios
-  ↓
-Express API
-  ↓
-Mongoose
-  ↓
+Users can only access and manage their own trips.
+
+📊 Dashboard
+
+The Trip Dashboard provides a quick overview of the user's travel plans.
+
+It calculates:
+
+Total Trips
+Upcoming Trips
+Completed Trips
+Total Planned Days
+
+It also provides quick access to:
+
+Recent trips
+Favorite trips
+Individual trip details
+🧪 API Testing
+
+The backend APIs were tested using Postman.
+
+Tested functionality includes:
+
+User registration
+User login
+Trip creation
+Get trips
+Get single trip
+Update trip
+Delete trip
+Add itinerary day
+Add activity
+Update activity
+Delete activity
+☁️ Deployment
+
+The project is deployed using Vercel.
+
+Frontend
+https://wanderly-frontend-three.vercel.app
+Backend
+https://wanderly-travel-platform.vercel.app
+
+MongoDB is hosted using MongoDB Atlas.
+
+🔮 Future Improvements
+
+Possible future improvements include:
+
+Google Maps integration
+Weather information for destinations
+Hotel booking
+Flight search
+Persistent favorite trips in the database
+Trip sharing
+Collaborative itinerary planning
+Notifications and reminders
+AI-powered trip recommendations
+Budget tracking
+Dark mode
+Social login
+👩‍💻 Author
+
+Developed as a MERN Stack Travel & Tourism project.
+
+Wanderly — Plan your journey. Explore the world. 🌍✈️
+
+⭐ Project Highlights
+
+This project demonstrates practical experience with:
+
+React.js
+Node.js
+Express.js
 MongoDB
-```
+Mongoose
+REST APIs
+JWT Authentication
+CRUD Operations
+React Router
+Axios
+Protected Routes
+Itinerary Management
+Responsive Web Development
+Vercel Deployment
 
-The Vite development server proxies `/api` requests to the Express backend during local development.
+### Do this now
 
-Destination information displayed on the website is retrieved from the backend database.
+1. Open your **main Wanderly folder**.
+2. Create/open **`README.md`**.
+3. Paste everything above.
+4. Save it.
+5. **Do NOT put your real `MONGO_URI` or `JWT_SECRET` in README.**
+6. Make sure `.env` is in `.gitignore`.
 
-## 🧪 API Testing
-
-The REST API was tested using Postman.
-
-Tested operations include:
-
-* Retrieve all destinations
-* Retrieve a single destination
-* Filter destinations by category
-* Add a destination
-* Update a destination
-* Delete a destination
-
-## 📄 Week 2 Implementation
-
-The Week 2 task extends the original Wanderly platform with:
-
-* Destination rating and popularity fields
-* Category filtering
-* Destination details page
-* React Router navigation
-* Loading and error states
-* Improved API integration
-* Updated project documentation
-
-## 👩‍💻 Project
-
-Built as a MERN Stack Development internship task.
-
----
-
-⭐ Built with the MERN Stack
+After this, the main remaining step is **GitHub final upload + checking the deployed website**.

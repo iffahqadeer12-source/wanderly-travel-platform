@@ -1,3 +1,4 @@
+import TripDetails from "./TripDetails.jsx";
 import TripPlanner from "./TripPlanner.jsx";
 import Profile from "./Profile.jsx";
 import { useAuth } from "./AuthContext.jsx";
@@ -703,6 +704,10 @@ function App() {
       <Route
         path="/trips"
         element={<TripPlanner />}
+      />
+      <Route
+        path="/trip/:id"
+        element={<TripDetails />}
       />
     </Routes>
   );

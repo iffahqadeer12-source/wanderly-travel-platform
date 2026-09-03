@@ -1,13 +1,20 @@
 const express = require("express");
 const cors = require("cors");
 const dotenv = require("dotenv");
+
+dotenv.config();
+
+console.log(
+  "JWT SECRET EXISTS:",
+  !!process.env.JWT_SECRET
+);
+
 const connectDB = require("./config/db");
 
 const destinationRoutes = require("./routes/destinationRoutes");
 const authRoutes = require("./routes/authRoutes");
 const userRoutes = require("./routes/userRoutes");
 const tripRoutes = require("./routes/tripRoutes");
-dotenv.config();
 
 const app = express();
 
