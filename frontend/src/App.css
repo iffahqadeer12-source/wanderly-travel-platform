@@ -987,3 +987,917 @@ button {
   color: #777;
   font-size: 14px;
 }
+/* ================================
+   WEEK 5 - SERVICES PAGE
+================================ */
+
+.services-page {
+  min-height: 100vh;
+  background: #f7f9fc;
+  padding-bottom: 60px;
+}
+
+.services-hero {
+  text-align: center;
+  padding: 80px 20px 60px;
+  background: linear-gradient(135deg, #eef6ff, #ffffff);
+}
+
+.services-hero h1 {
+  font-size: 48px;
+  margin-bottom: 15px;
+  color: #1f2937;
+}
+
+.services-hero p {
+  max-width: 700px;
+  margin: 0 auto;
+  font-size: 18px;
+  line-height: 1.7;
+  color: #6b7280;
+}
+
+.services-section {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 50px 20px;
+}
+
+.services-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 25px;
+}
+
+.service-card {
+  background: white;
+  border-radius: 18px;
+  overflow: hidden;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.service-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.12);
+}
+
+.service-image {
+  width: 100%;
+  height: 220px;
+  object-fit: cover;
+}
+
+.service-content {
+  padding: 22px;
+}
+
+.service-category {
+  display: inline-block;
+  padding: 6px 12px;
+  border-radius: 20px;
+  background: #eef6ff;
+  color: #2563eb;
+  font-size: 13px;
+  font-weight: 600;
+  margin-bottom: 12px;
+}
+
+.service-content h2 {
+  font-size: 22px;
+  color: #1f2937;
+  margin-bottom: 10px;
+}
+
+.service-location {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: #6b7280;
+  margin-bottom: 12px;
+}
+
+.service-description {
+  color: #6b7280;
+  line-height: 1.6;
+  margin-bottom: 18px;
+}
+
+.service-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.service-rating {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  color: #f59e0b;
+  font-weight: 600;
+}
+
+.service-price {
+  font-size: 20px;
+  font-weight: 700;
+  color: #111827;
+}
+
+.service-button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  padding: 12px 18px;
+  border-radius: 10px;
+  background: #2563eb;
+  color: white;
+  text-decoration: none;
+  font-weight: 600;
+  transition: background 0.3s ease;
+}
+
+.service-button:hover {
+  background: #1d4ed8;
+}
+
+
+/* ================================
+   SERVICES RESPONSIVE
+================================ */
+
+@media (max-width: 900px) {
+  .services-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 600px) {
+  .services-hero {
+    padding: 60px 20px 45px;
+  }
+
+  .services-hero h1 {
+    font-size: 36px;
+  }
+
+  .services-hero p {
+    font-size: 16px;
+  }
+
+  .services-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .service-image {
+    height: 210px;
+  }
+}
+/* ================================
+   WEEK 5 - SERVICE DETAILS
+================================ */
+
+.service-details-page {
+  min-height: 100vh;
+  background: #f7f9fc;
+  padding: 40px 20px 70px;
+}
+
+.service-details-container {
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.back-button {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  border: none;
+  background: transparent;
+  color: #2563eb;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  margin-bottom: 25px;
+}
+
+.back-button:hover {
+  color: #1d4ed8;
+}
+
+.service-details-card {
+  background: white;
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 10px 35px rgba(0, 0, 0, 0.08);
+}
+
+.service-details-image {
+  width: 100%;
+  height: 430px;
+  object-fit: cover;
+}
+
+.service-details-content {
+  padding: 35px;
+}
+
+.service-details-content h1 {
+  font-size: 38px;
+  color: #1f2937;
+  margin: 5px 0 12px;
+}
+
+.service-rating-large {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  color: #f59e0b;
+  font-weight: 700;
+  margin: 15px 0;
+}
+
+.service-details-description {
+  color: #6b7280;
+  font-size: 17px;
+  line-height: 1.8;
+  margin: 25px 0;
+}
+
+.service-features {
+  margin-top: 30px;
+}
+
+.service-features h3 {
+  font-size: 22px;
+  color: #1f2937;
+  margin-bottom: 18px;
+}
+
+.feature-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: #4b5563;
+  margin-bottom: 12px;
+}
+
+.feature-item svg {
+  color: #2563eb;
+}
+
+.service-booking-box {
+  margin-top: 35px;
+  padding: 25px;
+  border-radius: 15px;
+  background: #f8fafc;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+}
+
+.service-booking-box span {
+  display: block;
+  color: #6b7280;
+  margin-bottom: 5px;
+}
+
+.service-booking-box strong {
+  display: block;
+  font-size: 28px;
+  color: #111827;
+}
+
+.book-now-button {
+  border: none;
+  padding: 14px 28px;
+  border-radius: 10px;
+  background: #2563eb;
+  color: white;
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.book-now-button:hover {
+  background: #1d4ed8;
+}
+
+.book-now-button:disabled {
+  background: #9ca3af;
+  cursor: not-allowed;
+}
+
+
+/* ================================
+   SERVICE DETAILS RESPONSIVE
+================================ */
+
+@media (max-width: 700px) {
+  .service-details-page {
+    padding: 25px 15px 50px;
+  }
+
+  .service-details-image {
+    height: 280px;
+  }
+
+  .service-details-content {
+    padding: 25px 20px;
+  }
+
+  .service-details-content h1 {
+    font-size: 30px;
+  }
+
+  .service-details-description {
+    font-size: 16px;
+  }
+
+  .service-booking-box {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .book-now-button {
+    width: 100%;
+  }
+}
+/* ================================
+   WEEK 5 - BOOKING PAGE
+================================ */
+
+.booking-page {
+  min-height: 100vh;
+  background: #f7f9fc;
+  padding: 50px 20px 70px;
+}
+
+.booking-container {
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.booking-layout {
+  display: grid;
+  grid-template-columns: 1.4fr 0.8fr;
+  gap: 30px;
+  align-items: start;
+}
+
+.booking-form-card,
+.booking-summary-card {
+  background: white;
+  border-radius: 20px;
+  padding: 30px;
+  box-shadow: 0 10px 35px rgba(0, 0, 0, 0.08);
+}
+
+.booking-form-card h1 {
+  font-size: 34px;
+  color: #1f2937;
+  margin-bottom: 10px;
+}
+
+.booking-form-card > p {
+  color: #6b7280;
+  margin-bottom: 28px;
+  line-height: 1.6;
+}
+
+.booking-form-card form {
+  display: flex;
+  flex-direction: column;
+}
+
+.booking-form-card label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #374151;
+  font-weight: 600;
+  margin-bottom: 8px;
+  margin-top: 18px;
+}
+
+.booking-form-card input,
+.booking-form-card textarea {
+  width: 100%;
+  padding: 13px 15px;
+  border: 1px solid #d1d5db;
+  border-radius: 10px;
+  font-size: 15px;
+  font-family: inherit;
+  outline: none;
+  box-sizing: border-box;
+}
+
+.booking-form-card input:focus,
+.booking-form-card textarea:focus {
+  border-color: #2563eb;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+}
+
+.booking-form-card textarea {
+  resize: vertical;
+}
+
+.booking-error {
+  padding: 12px 15px;
+  margin-bottom: 15px;
+  border-radius: 10px;
+  background: #fee2e2;
+  color: #b91c1c;
+  font-weight: 500;
+}
+
+.confirm-booking-button {
+  margin-top: 25px;
+  border: none;
+  padding: 14px 20px;
+  border-radius: 10px;
+  background: #2563eb;
+  color: white;
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.confirm-booking-button:hover {
+  background: #1d4ed8;
+}
+
+.confirm-booking-button:disabled {
+  background: #9ca3af;
+  cursor: not-allowed;
+}
+
+
+/* BOOKING SUMMARY */
+
+.booking-summary-card {
+  position: sticky;
+  top: 25px;
+}
+
+.booking-summary-card img {
+  width: 100%;
+  height: 210px;
+  object-fit: cover;
+  border-radius: 14px;
+  margin-bottom: 20px;
+}
+
+.booking-summary-card h2 {
+  color: #1f2937;
+  margin-bottom: 8px;
+}
+
+.booking-summary-card > p {
+  color: #6b7280;
+  margin-bottom: 25px;
+}
+
+.booking-summary-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 15px;
+  padding: 12px 0;
+  color: #6b7280;
+}
+
+.booking-summary-row strong {
+  color: #111827;
+}
+
+.booking-summary-card hr {
+  border: none;
+  border-top: 1px solid #e5e7eb;
+  margin: 15px 0;
+}
+
+.booking-total {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 10px;
+}
+
+.booking-total span {
+  font-size: 18px;
+  font-weight: 600;
+  color: #374151;
+}
+
+.booking-total strong {
+  font-size: 24px;
+  color: #2563eb;
+}
+
+
+/* BOOKING RESPONSIVE */
+
+@media (max-width: 800px) {
+  .booking-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .booking-summary-card {
+    position: static;
+  }
+}
+
+@media (max-width: 600px) {
+  .booking-page {
+    padding: 30px 15px 50px;
+  }
+
+  .booking-form-card,
+  .booking-summary-card {
+    padding: 22px;
+  }
+
+  .booking-form-card h1 {
+    font-size: 28px;
+  }
+}
+/* ================================
+   WEEK 5 - BOOKING CONFIRMATION
+================================ */
+
+.booking-confirmation-page {
+  min-height: 100vh;
+  background: #f7f9fc;
+  padding: 60px 20px 80px;
+}
+
+.confirmation-container {
+  max-width: 750px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.confirmation-icon {
+  color: #16a34a;
+  margin-bottom: 15px;
+}
+
+.confirmation-container h1 {
+  font-size: 42px;
+  color: #1f2937;
+  margin-bottom: 10px;
+}
+
+.confirmation-message {
+  color: #6b7280;
+  font-size: 17px;
+  margin-bottom: 35px;
+}
+
+.confirmation-card {
+  background: white;
+  border-radius: 20px;
+  padding: 30px;
+  text-align: left;
+  box-shadow: 0 10px 35px rgba(0, 0, 0, 0.08);
+}
+
+.confirmation-card h2 {
+  font-size: 27px;
+  color: #1f2937;
+  margin-bottom: 10px;
+}
+
+.confirmation-location {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  color: #6b7280;
+  margin-bottom: 25px;
+}
+
+.confirmation-info {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 15px;
+  margin-bottom: 25px;
+}
+
+.confirmation-info > div {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 15px;
+  background: #f8fafc;
+  border-radius: 12px;
+  color: #6b7280;
+}
+
+.confirmation-info svg {
+  color: #2563eb;
+  flex-shrink: 0;
+}
+
+.confirmation-info strong {
+  color: #374151;
+}
+
+.confirmation-booking-id,
+.confirmation-total,
+.confirmation-status {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 0;
+  border-top: 1px solid #e5e7eb;
+}
+
+.confirmation-booking-id span,
+.confirmation-total span,
+.confirmation-status span {
+  color: #6b7280;
+}
+
+.confirmation-booking-id strong {
+  color: #374151;
+}
+
+.confirmation-total strong {
+  font-size: 24px;
+  color: #2563eb;
+}
+
+.confirmation-status strong {
+  padding: 6px 12px;
+  border-radius: 20px;
+  background: #fef3c7;
+  color: #92400e;
+}
+
+.confirmation-actions {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  margin-top: 25px;
+}
+
+.confirmation-button {
+  border: none;
+  padding: 13px 22px;
+  border-radius: 10px;
+  background: #2563eb;
+  color: white;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.confirmation-button:hover {
+  background: #1d4ed8;
+}
+
+.confirmation-button.secondary {
+  background: white;
+  color: #2563eb;
+  border: 1px solid #2563eb;
+}
+
+.confirmation-button.secondary:hover {
+  background: #eff6ff;
+}
+
+
+/* CONFIRMATION RESPONSIVE */
+
+@media (max-width: 600px) {
+  .booking-confirmation-page {
+    padding: 40px 15px 60px;
+  }
+
+  .confirmation-container h1 {
+    font-size: 32px;
+  }
+
+  .confirmation-info {
+    grid-template-columns: 1fr;
+  }
+
+  .confirmation-actions {
+    flex-direction: column;
+  }
+
+  .confirmation-button {
+    width: 100%;
+  }
+}
+/* ================================
+   WEEK 5 - MY BOOKINGS
+================================ */
+
+.my-bookings-page {
+  min-height: 100vh;
+  background: #f7f9fc;
+  padding: 50px 20px 70px;
+}
+
+.my-bookings-container {
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.my-bookings-header {
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.my-bookings-header h1 {
+  font-size: 42px;
+  color: #1f2937;
+  margin-bottom: 10px;
+}
+
+.my-bookings-header p {
+  color: #6b7280;
+  font-size: 17px;
+}
+
+.bookings-list {
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+}
+
+.booking-history-card {
+  display: grid;
+  grid-template-columns: 250px 1fr;
+  background: white;
+  border-radius: 18px;
+  overflow: hidden;
+  box-shadow: 0 8px 28px rgba(0, 0, 0, 0.08);
+}
+
+.booking-history-card > img {
+  width: 100%;
+  height: 100%;
+  min-height: 250px;
+  object-fit: cover;
+}
+
+.booking-history-content {
+  padding: 25px;
+}
+
+.booking-history-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 20px;
+}
+
+.booking-history-top h2 {
+  font-size: 23px;
+  color: #1f2937;
+  margin: 5px 0 8px;
+}
+
+.booking-status {
+  padding: 7px 13px;
+  border-radius: 20px;
+  font-size: 13px;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.booking-status.pending {
+  background: #fef3c7;
+  color: #92400e;
+}
+
+.booking-status.confirmed {
+  background: #dcfce7;
+  color: #166534;
+}
+
+.booking-status.cancelled {
+  background: #fee2e2;
+  color: #991b1b;
+}
+
+.booking-status.completed {
+  background: #dbeafe;
+  color: #1e40af;
+}
+
+.booking-history-info {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+  margin: 22px 0;
+}
+
+.booking-history-info > div {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  padding: 12px;
+  background: #f8fafc;
+  border-radius: 10px;
+  color: #6b7280;
+  font-size: 14px;
+}
+
+.booking-history-info svg {
+  color: #2563eb;
+  flex-shrink: 0;
+}
+
+.booking-history-info strong {
+  color: #374151;
+}
+
+.view-booking-button {
+  border: none;
+  padding: 11px 20px;
+  border-radius: 9px;
+  background: #2563eb;
+  color: white;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.view-booking-button:hover {
+  background: #1d4ed8;
+}
+
+.no-bookings {
+  background: white;
+  padding: 50px 25px;
+  text-align: center;
+  border-radius: 18px;
+  box-shadow: 0 8px 28px rgba(0, 0, 0, 0.06);
+}
+
+.no-bookings h2 {
+  color: #1f2937;
+  margin-bottom: 10px;
+}
+
+.no-bookings p {
+  color: #6b7280;
+  margin-bottom: 22px;
+}
+
+
+/* MY BOOKINGS RESPONSIVE */
+
+@media (max-width: 850px) {
+  .booking-history-card {
+    grid-template-columns: 200px 1fr;
+  }
+
+  .booking-history-info {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 650px) {
+  .my-bookings-page {
+    padding: 35px 15px 50px;
+  }
+
+  .my-bookings-header h1 {
+    font-size: 32px;
+  }
+
+  .booking-history-card {
+    grid-template-columns: 1fr;
+  }
+
+  .booking-history-card > img {
+    height: 220px;
+    min-height: 0;
+  }
+
+  .booking-history-content {
+    padding: 20px;
+  }
+
+  .booking-history-top {
+    flex-direction: column;
+  }
+
+  .booking-history-info {
+    grid-template-columns: 1fr;
+  }
+
+  .view-booking-button {
+    width: 100%;
+  }
+}

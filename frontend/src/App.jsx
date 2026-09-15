@@ -1,3 +1,8 @@
+import MyBookings from "./MyBookings.jsx";
+import BookingConfirmation from "./BookingConfirmation.jsx";
+import Booking from "./Booking.jsx";
+import ServiceDetails from "./ServiceDetails.jsx";
+import Services from "./Services.jsx";
 import TripDetails from "./TripDetails.jsx";
 import TripPlanner from "./TripPlanner.jsx";
 import Profile from "./Profile.jsx";
@@ -675,6 +680,21 @@ function DestinationCard({ destination }) {
           Explore destination
           <ArrowRight size={17} />
         </Link>
+        <Link
+  to="/services"
+  onClick={() => setMenuOpen(false)}
+  className="nav-services"
+>
+  🏨 Services
+</Link>
+<Link
+  to="/my-bookings"
+  onClick={() => setMenuOpen(false)}
+  className="nav-bookings"
+>
+  📋 My Bookings
+</Link>
+
       </div>
     </article>
   );
@@ -716,6 +736,23 @@ function App() {
         path="/trip/:id"
         element={<TripDetails />}
       />
+      <Route path="/services" element={<Services />} />
+      <Route
+  path="/service/:id"
+  element={<ServiceDetails />}
+/>
+<Route
+  path="/book/:id"
+  element={<Booking />}
+/>
+<Route
+  path="/booking-confirmation/:id"
+  element={<BookingConfirmation />}
+/>
+<Route
+  path="/my-bookings"
+  element={<MyBookings />}
+/>
     </Routes>
   );
 }

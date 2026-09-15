@@ -12,6 +12,8 @@ console.log(
 const connectDB = require("./config/db");
 
 const destinationRoutes = require("./routes/destinationRoutes");
+const serviceRoutes = require("./routes/serviceRoutes");
+const bookingRoutes = require("./routes/bookingRoutes");
 const authRoutes = require("./routes/authRoutes");
 const userRoutes = require("./routes/userRoutes");
 const tripRoutes = require("./routes/tripRoutes");
@@ -24,6 +26,8 @@ app.use(express.json());
 connectDB();
 
 app.use("/api/destinations", destinationRoutes);
+app.use("/api/services", serviceRoutes);
+app.use("/api/bookings", bookingRoutes);
 app.use("/api/auth", authRoutes);
 app.use("/api/users", userRoutes);
 app.use("/api/trips", tripRoutes);
