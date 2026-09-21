@@ -723,11 +723,15 @@ function App() {
       />
 
       <Route
-        path="/destination/:id"
-        element={
-          <DestinationDetails />
-        }
-      />
+  path="/destinations/:id"
+  element={
+    <DestinationDetails />
+  }
+/>
+<Route
+  path="/destination/:id"
+  element={<DestinationDetails />}
+/>
       <Route
         path="/trips"
         element={<TripPlanner />}

@@ -7,6 +7,7 @@ import {
   ArrowLeft,
   CheckCircle,
 } from "lucide-react";
+import Reviews from "./Reviews.jsx";
 
 function ServiceDetails() {
   const { id } = useParams();
@@ -142,7 +143,9 @@ function ServiceDetails() {
 
           </div>
 
-        </div>
+                </div>
+
+        <Reviews serviceId={service._id} />
 
       </div>
 

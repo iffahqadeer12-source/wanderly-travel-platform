@@ -3,6 +3,7 @@ import { useParams, Link } from "react-router-dom";
 import { useAuth } from "./AuthContext.jsx";
 import axios from "axios";
 import { ArrowLeft, MapPin, Star } from "lucide-react";
+import Reviews from "./Reviews.jsx";
 
 function DestinationDetails() {
   const { id } = useParams();
@@ -164,7 +165,9 @@ if (token) {
         <button className="primary-button">
           Explore this destination
         </button>
-      </div>
+            </div>
+
+      <Reviews destinationId={destination._id} />
     </div>
   );
 }

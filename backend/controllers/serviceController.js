@@ -128,13 +128,11 @@ const updateService = async (req, res) => {
     if (name !== undefined) service.name = name;
     if (category !== undefined) service.category = category;
     if (location !== undefined) service.location = location;
-    if (description !== undefined)
-      service.description = description;
+    if (description !== undefined) service.description = description;
     if (image !== undefined) service.image = image;
     if (price !== undefined) service.price = price;
     if (rating !== undefined) service.rating = rating;
-    if (availability !== undefined)
-      service.availability = availability;
+    if (availability !== undefined) service.availability = availability;
     if (features !== undefined) service.features = features;
 
     const updatedService = await service.save();
@@ -177,6 +175,7 @@ const deleteService = async (req, res) => {
   }
 };
 
+// EXPORT SERVICE FUNCTIONS
 module.exports = {
   getServices,
   getService,
