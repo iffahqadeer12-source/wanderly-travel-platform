@@ -299,9 +299,9 @@ const filteredReviews =
           ) : (
             filteredReviews.map((review) => {
               const isOwner =
-                user &&
-                review.user &&
-                review.user._id === user._id;
+  user &&
+  review.user &&
+  String(review.user._id) === String(user.id);
 
               return (
                 <div className="review-card" key={review._id}>
