@@ -26,6 +26,7 @@ import { Routes, Route, Link } from "react-router-dom";
 
 import "./App.css";
 import DestinationDetails from "./DestinationDetails.jsx";
+import Recommendations from "./Recommendations.jsx";
 
 function HomePage() {
   const { user, logout } = useAuth();
@@ -183,6 +184,13 @@ function HomePage() {
 </Link>
             {user ? (
   <>
+  <Link
+  to="/recommendations"
+  onClick={() => setMenuOpen(false)}
+  className="nav-recommendations"
+>
+  ✨ Recommendations
+</Link>
     <Link to="/profile" className="nav-profile">
       👤 {user.name}
     </Link>
@@ -731,6 +739,10 @@ function App() {
 <Route
   path="/destination/:id"
   element={<DestinationDetails />}
+/>
+<Route
+  path="/recommendations"
+  element={<Recommendations />}
 />
       <Route
         path="/trips"

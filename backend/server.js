@@ -1,8 +1,11 @@
 const express = require("express");
 const cors = require("cors");
 const dotenv = require("dotenv");
+const path = require("path");
 
-dotenv.config();
+dotenv.config({
+  path: path.join(__dirname, ".env"),
+});
 
 console.log(
   "JWT SECRET EXISTS:",
@@ -13,6 +16,7 @@ const connectDB = require("./config/db");
 
 const destinationRoutes = require("./routes/destinationRoutes");
 const serviceRoutes = require("./routes/serviceRoutes");
+const recommendationRoutes = require("./routes/recommendationRoutes");
 const bookingRoutes = require("./routes/bookingRoutes");
 const reviewRoutes = require("./routes/reviewRoutes");
 const authRoutes = require("./routes/authRoutes");
@@ -28,6 +32,7 @@ connectDB();
 
 app.use("/api/destinations", destinationRoutes);
 app.use("/api/services", serviceRoutes);
+app.use("/api/recommendations", recommendationRoutes);
 app.use("/api/bookings", bookingRoutes);
 app.use("/api/reviews", reviewRoutes);
 app.use("/api/auth", authRoutes);
