@@ -1,38 +1,118 @@
-# 🌍 Wanderly - Travel & Itinerary Management Platform
+# 🌍 Wanderly - Full-Stack Travel & Tourism Platform
 
-Wanderly is a full-stack Travel & Tourism platform built using the MERN stack. It allows users to explore destinations, create trips, manage itineraries, add activities, and organize their travel plans from a single dashboard.
+Wanderly is a full-stack Travel & Tourism platform built using the MERN stack. It allows users to explore destinations, discover travel services, manage trips and itineraries, make bookings, submit reviews and ratings, save favorites, and receive personalized travel recommendations from a single platform.
 
 ## 🚀 Live Demo
 
-Frontend: https://wanderly-frontend-three.vercel.app
+**Frontend:**  
+https://wanderly-frontend-three.vercel.app
 
-Backend API: https://wanderly-travel-platform.vercel.app
+**Backend API:**  
+https://wanderly-travel-platform.vercel.app
+
+**GitHub Repository:**  
+https://github.com/iffahqadeer12-source/wanderly-travel-platform
 
 ---
 
 ## 📌 Features
 
 ### 🔐 User Authentication
+
 - User registration
 - User login
 - JWT-based authentication
 - Protected routes
-- Secure password hashing using bcrypt
+- Password hashing using bcrypt
 - Logout functionality
+- User-specific protected functionality
 
 ### 🌍 Destinations
-- View travel destinations
+
+- Browse travel destinations
 - Search destinations
 - View destination details
 - Featured destinations
 - Destination categories
-- Destination API integration
+- Destination information and details
+- Favorites support
 
-### ✈️ Trip Management
+### 🏨 Travel Services
+
+- Browse available travel services
+- View service details
+- Service categories
+- Service location and pricing
+- Service availability
+- Service ratings
+- Booking integration
+
+### 📋 Booking System
+
 Users can:
 
-- Create a new trip
-- View all personal trips
+- Book available travel services
+- Submit booking information
+- View booking confirmation
+- View their bookings
+- Access booking information from the user area
+
+### ⭐ Reviews & Ratings
+
+The platform provides a complete review and rating system.
+
+Users can:
+
+- Add reviews
+- Edit their own reviews
+- Delete their own reviews
+- Give star ratings
+- Mark reviews as helpful
+- Filter reviews by rating
+- View average ratings
+- View rating distribution
+- View review information
+
+Review ownership and authentication are enforced for protected actions.
+
+### ❤️ Favorites
+
+Users can:
+
+- Add destinations to favorites
+- Remove destinations from favorites
+- View their favorite destinations
+- Access favorites from their user area
+
+### ✨ Personalized Recommendations
+
+Wanderly includes a personalized travel recommendation system based on user preferences.
+
+Users can specify:
+
+- Budget
+- Travel style
+- Preferred category
+- Preferred location
+- Trip duration
+
+The recommendation system uses rule-based matching to generate personalized destinations and services.
+
+Recommendations include:
+
+- Match percentage
+- Recommendation reasons
+- Personalized destinations
+- Personalized travel services
+- Favorites
+- Recently viewed destinations
+
+### 🗺️ Trip Management
+
+Users can:
+
+- Create trips
+- View personal trips
 - Open individual trip details
 - Edit trips
 - Delete trips
@@ -41,17 +121,18 @@ Users can:
 - Add trip descriptions
 
 ### 🗓️ Itinerary Management
+
 Each trip can contain multiple itinerary days.
 
 Users can:
 
 - Add itinerary days
-- Add multiple activities to each day
+- Add multiple activities
 - Edit activities
 - Delete activities
 - Organize activities by day
 
-Each activity includes:
+Each activity can include:
 
 - Activity name
 - Location
@@ -59,31 +140,43 @@ Each activity includes:
 - Category
 - Description
 
-### 📊 Trip Dashboard
-The dashboard displays:
+### 👤 User Area
 
-- Total Trips
-- Upcoming Trips
-- Completed Trips
-- Total Planned Days
-- Recent Trips
-- Favorite Trips
+The user area provides access to:
 
-### ⭐ Favorite Trips
-Users can mark trips as favorites and easily access their favorite travel plans.
+- Profile
+- My Bookings
+- My Reviews
+- Favorites
+- Personalized Recommendations
+- Personal travel information
 
 ### 📱 Responsive Design
+
 The platform is designed to work across:
 
 - Desktop
 - Tablet
 - Mobile devices
 
+### ⚠️ Validation & Error Handling
+
+The application includes:
+
+- Form validation
+- Authentication validation
+- Invalid request handling
+- Loading states
+- Empty states
+- Error states
+- API error handling
+
 ---
 
 ## 🛠️ Technologies Used
 
 ### Frontend
+
 - React.js
 - Vite
 - Axios
@@ -92,6 +185,7 @@ The platform is designed to work across:
 - CSS
 
 ### Backend
+
 - Node.js
 - Express.js
 - MongoDB
@@ -101,10 +195,14 @@ The platform is designed to work across:
 - CORS
 - dotenv
 
-### Deployment
+### Tools & Deployment
+
+- Git
+- GitHub
+- Postman
 - Vercel
 - MongoDB Atlas
-- GitHub
+- VS Code
 
 ---
 
@@ -120,7 +218,9 @@ Wanderly/
 │   ├── controllers/
 │   │   ├── authController.js
 │   │   ├── destinationController.js
-│   │   └── tripController.js
+│   │   ├── tripController.js
+│   │   ├── reviewController.js
+│   │   └── recommendationController.js
 │   │
 │   ├── middleware/
 │   │   └── authMiddleware.js
@@ -128,16 +228,19 @@ Wanderly/
 │   ├── models/
 │   │   ├── User.js
 │   │   ├── Destination.js
-│   │   └── Trip.js
+│   │   ├── Trip.js
+│   │   ├── Review.js
+│   │   └── UserPreference.js
 │   │
 │   ├── routes/
 │   │   ├── authRoutes.js
 │   │   ├── destinationRoutes.js
-│   │   └── tripRoutes.js
+│   │   ├── tripRoutes.js
+│   │   ├── reviewRoutes.js
+│   │   └── recommendationRoutes.js
 │   │
 │   ├── .env
-│   ├── server.js
-│   └── package.json
+│   └── server.js
 │
 ├── frontend/
 │   ├── src/
@@ -147,6 +250,8 @@ Wanderly/
 │   │   ├── Login.jsx
 │   │   ├── Register.jsx
 │   │   ├── Profile.jsx
+│   │   ├── Recommendations.jsx
+│   │   ├── Reviews.jsx
 │   │   ├── TripPlanner.jsx
 │   │   ├── TripDetails.jsx
 │   │   └── main.jsx
@@ -164,7 +269,7 @@ POST	/api/auth/login	Login user
 Destinations
 Method	Endpoint	Description
 GET	/api/destinations	Get all destinations
-GET	/api/destinations/:id	Get single destination
+GET	/api/destinations/:id	Get a destination
 POST	/api/destinations	Add destination
 PUT	/api/destinations/:id	Update destination
 DELETE	/api/destinations/:id	Delete destination
@@ -175,25 +280,34 @@ GET	/api/trips	Get user's trips
 GET	/api/trips/:id	Get single trip
 PUT	/api/trips/:id	Update trip
 DELETE	/api/trips/:id	Delete trip
-Itinerary
+Reviews
 Method	Endpoint	Description
-POST	/api/trips/:id/days	Add itinerary day
-POST	/api/trips/:id/days/:dayId/activities	Add activity
-PUT	/api/trips/:id/days/:dayId/activities/:activityId	Update activity
-DELETE	/api/trips/:id/days/:dayId/activities/:activityId	Delete activity
+GET	/api/reviews/...	Get reviews
+POST	/api/reviews/...	Create review
+PUT	/api/reviews/:id	Update review
+DELETE	/api/reviews/:id	Delete review
+Recommendations
+Method	Endpoint	Description
+GET	/api/recommendations	Get personalized recommendations
+GET	/api/recommendations/preferences	Get user preferences
+POST	/api/recommendations/preferences	Save/update user preferences
+
+API routes may require JWT authentication where protected.
+
 🗄️ Database Models
 User
 
-The User model stores:
+Stores user information including:
 
 Name
 Email
 Password
 Profile information
 Favorites
+Recently viewed destinations
 Destination
 
-The Destination model stores:
+Stores destination information including:
 
 Name
 Country
@@ -204,32 +318,57 @@ Category
 Featured status
 Trip
 
-The Trip model stores:
+Stores:
 
 User
-Trip Name
+Trip name
 Destination
-Start Date
-End Date
-Number of Travelers
+Start date
+End date
+Number of travelers
 Description
 Status
 Itinerary
-Itinerary
+Review
 
-Each itinerary contains:
+Stores:
 
-Day number
-Date
-Activities
+User
+Destination/service
+Rating
+Review text
+Helpful count
+Optional review image
+Timestamps
+User Preference
 
-Each activity contains:
+Stores personalized recommendation preferences:
 
-Name
-Location
-Time
+User
+Budget
+Travel style
+Preferred category
+Preferred location
+Trip duration
+✨ Recommendation System
+
+The recommendation system uses a rule-based scoring approach.
+
+Preference matching contributes to the recommendation score based on factors such as:
+
 Category
-Description
+Location
+Budget
+Travel style
+Trip duration
+
+The system can also consider:
+
+Favorites
+Recently viewed destinations
+
+The resulting recommendations include a match percentage and explanation for why an item was recommended.
+
 🔑 Environment Variables
 Backend
 
@@ -244,36 +383,42 @@ Create a .env file inside the frontend folder:
 
 VITE_API_URL=http://localhost:5000/api
 
-For production, use your deployed backend API URL.
+For production, use the deployed backend API URL.
+
+Never commit real credentials or secrets to GitHub.
 
 💻 Installation
 1. Clone the Repository
-git clone YOUR_GITHUB_REPOSITORY_URL
+git clone https://github.com/iffahqadeer12-source/wanderly-travel-platform.git
 2. Navigate to the Project
-cd Wanderly
+cd wanderly-travel-platform
 3. Install Backend Dependencies
 cd backend
 npm install
 4. Configure Backend Environment Variables
 
-Create the .env file and add:
+Create:
+
+backend/.env
+
+and add:
 
 PORT=5000
 MONGO_URI=your_mongodb_connection_string
 JWT_SECRET=your_jwt_secret
 5. Start Backend
-npm run dev
+node server.js
 
 The backend will run on:
 
 http://localhost:5000
-🎨 Install Frontend Dependencies
+6. Install Frontend Dependencies
 
 Open another terminal:
 
 cd frontend
 npm install
-Start Frontend
+7. Start Frontend
 npm run dev
 
 The frontend will run on:
@@ -287,53 +432,50 @@ JWT authentication
 Protected API routes
 Password hashing with bcrypt
 Environment variables for sensitive configuration
-User-specific trip access
+User-specific protected functionality
+Authentication checks for protected actions
+🧪 Testing
 
-Users can only access and manage their own trips.
-
-📊 Dashboard
-
-The Trip Dashboard provides a quick overview of the user's travel plans.
-
-It calculates:
-
-Total Trips
-Upcoming Trips
-Completed Trips
-Total Planned Days
-
-It also provides quick access to:
-
-Recent trips
-Favorite trips
-Individual trip details
-🧪 API Testing
-
-The backend APIs were tested using Postman.
-
-Tested functionality includes:
+The application was tested across its major modules, including:
 
 User registration
 User login
-Trip creation
-Get trips
-Get single trip
-Update trip
-Delete trip
-Add itinerary day
-Add activity
-Update activity
-Delete activity
+Protected routes
+Destinations
+Favorites
+Travel services
+Bookings
+Reviews
+Ratings
+Helpful review votes
+Personalized recommendations
+User preferences
+My Bookings
+My Reviews
+User profile
+Frontend/backend communication
+
+Backend APIs were also tested using Postman.
+
 ☁️ Deployment
 
 The project is deployed using Vercel.
 
 Frontend
+
 https://wanderly-frontend-three.vercel.app
+
 Backend
+
 https://wanderly-travel-platform.vercel.app
 
-MongoDB is hosted using MongoDB Atlas.
+Database
+
+MongoDB Atlas
+
+Source Code
+
+https://github.com/iffahqadeer12-source/wanderly-travel-platform
 
 🔮 Future Improvements
 
@@ -341,19 +483,19 @@ Possible future improvements include:
 
 Google Maps integration
 Weather information for destinations
-Hotel booking
 Flight search
-Persistent favorite trips in the database
 Trip sharing
 Collaborative itinerary planning
 Notifications and reminders
-AI-powered trip recommendations
 Budget tracking
-Dark mode
 Social login
+Advanced analytics
+Admin dashboard
+Role-based administration
+API documentation interface
 👩‍💻 Author
 
-Developed as a MERN Stack Travel & Tourism project.
+Developed as a MERN Stack Full-Stack Travel & Tourism project.
 
 Wanderly — Plan your journey. Explore the world. 🌍✈️
 
@@ -372,17 +514,22 @@ CRUD Operations
 React Router
 Axios
 Protected Routes
+Travel Services
+Booking System
+Reviews & Ratings
+Favorites
+Personalized Recommendations
 Itinerary Management
 Responsive Web Development
 Vercel Deployment
 
-### Do this now
 
-1. Open your **main Wanderly folder**.
-2. Create/open **`README.md`**.
-3. Paste everything above.
-4. Save it.
-5. **Do NOT put your real `MONGO_URI` or `JWT_SECRET` in README.**
-6. Make sure `.env` is in `.gitignore`.
+### ⚠️ One important correction before you paste it
 
-After this, the main remaining step is **GitHub final upload + checking the deployed website**.
+I intentionally did **not** invent detailed service/booking endpoint paths because the README you gave me doesn't show those exact routes. Your README should document the **actual route names from your code**, not guessed ones.
+
+So for the final README, I want to verify the actual backend `routes` folder before we claim every endpoint.
+
+**Don't commit this README yet.**
+
+Your application itself is ready. The README is just the last documentation cleanup. After we verify the actual route filenames/endpoints, we'll finalize it and then you can submit.
